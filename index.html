@@ -39,6 +39,13 @@
         .order-list { display: flex; flex-direction: column; gap: 10px; }
         .order-item { padding: 12px; background: #fff; border: 1px solid #0056b3; border-radius: 5px; cursor: grab; font-weight: bold; display: flex; align-items: center; }
         .order-item::before { content: '☰'; margin-right: 15px; color: #888; }
+        /* 考後檢閱樣式 */
+        .review-container { max-height: 50vh; overflow-y: auto; text-align: left; margin-top: 20px; padding-right: 10px; }
+        .review-item { background: #f9f9f9; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-left: 5px solid #ccc; }
+        .review-item.correct { border-left-color: #28a745; }
+        .review-item.incorrect { border-left-color: #d9534f; }
+        .review-question { font-weight: bold; margin-bottom: 10px; white-space: pre-wrap; }
+        .correct-answer { margin-top: 10px; background: #e9ecef; padding: 10px; border-radius: 4px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -75,6 +82,7 @@
         <div id="result-screen" class="screen">
             <h1>測驗結束</h1>
             <div id="result-message" class="result-details"></div>
+            <div id="review-container" class="review-container" style="margin-top: 20px; border-top: 2px solid #ddd; padding-top: 20px;"></div>
             <button onclick="location.reload()">重新測驗</button>
         </div>
     </div>
@@ -240,8 +248,7 @@
                 examQuestions.push(...catQs.slice(0, Math.min(distribution[i - 1], catQs.length)));
             }
             
-            // 打亂整份試卷的順序，使不同類別的題目交錯出現
-            shuffleArray(examQuestions);
+            // 依據您的要求：不隨機打亂題組，確保依照單元一到單元五的順序出題
         }
 
         function startQuiz() {
@@ -476,13 +483,14 @@
             message += isPass ? `<p class="pass">🎉 恭喜您！您達到了 70% 的及格門檻（${passMark.toFixed(1)}分），通過了 ISO 27001 模擬測驗。</p>` : `<p class="fail">❌ 很遺憾，您未達 70% 的及格標準（${passMark.toFixed(1)}分），請再接再厲。</p>`;
 
             document.getElementById('result-message').innerHTML = message;
+            
+            // 測驗結束後自動顯示錯題與解析畫面
+            showReview();
         }
 
         function showReview() {
-            document.getElementById('result-screen').classList.remove('active');
-            document.getElementById('review-screen').classList.add('active');
             const container = document.getElementById('review-container');
-            container.innerHTML = '';
+            container.innerHTML = '<h3 style="text-align:center;">作答回顧 (錯題與正確解答)</h3>';
 
             examQuestions.forEach((q, index) => {
                 let item = document.createElement('div');
@@ -509,10 +517,6 @@
                 item.appendChild(ansBox);
                 container.appendChild(item);
             });
-        }
-        function hideReview() {
-            document.getElementById('review-screen').classList.remove('active');
-            document.getElementById('result-screen').classList.add('active');
         }
     </script>
 </body>
