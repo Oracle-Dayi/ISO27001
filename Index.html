@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO 27001 模擬考試系統</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        .screen { display: none; }
+        .screen.active { display: block; }
+        h1 { font-size: 24px; color: #0056b3; margin-bottom: 20px; text-align: center; }
+        .header-info { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
+        .timer { color: #d9534f; }
+        .question { font-size: 18px; margin-bottom: 15px; }
+        .options { list-style: none; padding: 0; }
+        .options li { background: #f9f9f9; margin-bottom: 10px; padding: 10px 15px; border-radius: 5px; border: 1px solid #ddd; cursor: pointer; transition: background 0.3s; }
+        .options li:hover { background: #e9ecef; }
+        .options li.selected { background: #d0e8ff; border-color: #0056b3; }
+        .options input { margin-right: 10px; cursor: pointer; }
+        button { display: block; width: 100%; padding: 12px; background: #0056b3; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 20px; transition: background 0.3s; }
+        button:hover { background: #004494; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .result-details { margin-top: 20px; font-size: 18px; text-align: center; }
+        .pass { color: #28a745; font-weight: bold; }
+        .fail { color: #d9534f; font-weight: bold; }
+        .break-btn { display: inline-block; width: auto; padding: 5px 12px; background-color: #f0ad4e; margin-top: 0; margin-left: 15px; font-size: 14px; }
+        .break-btn:hover { background-color: #ec971f; }
+        #break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); color: #fff; z-index: 1000; flex-direction: column; justify-content: center; align-items: center; }
+        #break-overlay.active { display: flex; }
+        /* 拖放互動題型樣式 */
+        .interactive-area { margin-top: 15px; }
+        .word-pool { display: flex; flex-wrap: wrap; gap: 10px; padding: 15px; background: #e9ecef; border-radius: 5px; min-height: 50px; border: 2px dashed #bbb; margin-bottom: 15px; }
+        .draggable { padding: 8px 15px; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: grab; user-select: none; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .draggable.dragging { opacity: 0.5; }
+        .drop-zone { display: inline-block; min-width: 100px; height: 35px; border-bottom: 2px solid #0056b3; margin: 0 5px; vertical-align: bottom; background: #f8f9fa; text-align: center; }
+        .match-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; background: #f9f9f9; border-radius: 5px; border: 1px solid #ddd; }
+        .match-left { flex: 1; font-weight: bold; }
+        .order-list { display: flex; flex-direction: column; gap: 10px; }
+        .order-item { padding: 12px; background: #fff; border: 1px solid #0056b3; border-radius: 5px; cursor: grab; font-weight: bold; display: flex; align-items: center; }
+        .order-item::before { content: '☰'; margin-right: 15px; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <h1>ISO 27001 模擬考試系統</h1>
+            <p>歡迎進入 ISO 27001 資訊安全管理系統模擬測驗。本測驗依照正式考試架構設計：</p>
+            <ul>
+                <li><strong>時間限制：</strong> 105 分鐘（1 小時 45 分鐘）</li>
+                <li><strong>測驗題數：</strong> 共 40 題（依照正式單元配比抽取）。</li>
+                <li><strong>單向進行：</strong> 進入下一題後，<strong>無法回到上一題</strong>。</li>
+                <li><strong>自動計分：</strong> 測驗結束後將自動結算成績，滿分 40 分，及格門檻為 70%（28分）。</li>
+            </ul>
+            <button id="start-btn">開始測驗</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="header-info">
+                <div id="question-tracker">題號: 1 / 40</div>
+                <div style="display: flex; align-items: center;">
+                    <div id="timer" class="timer">剩餘時間: 1小時:45分鐘:00秒</div>
+                    <button id="break-btn" class="break-btn">休息一下</button>
+                </div>
+            </div>
+            <div id="question-text" class="question">載入中...</div>
+            <ul id="options-container" class="options"></ul>
+            <div id="interactive-area" class="interactive-area"></div>
+            <button id="next-btn" disabled>下一題 / 提交</button>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <h1>測驗結束</h1>
+            <div id="result-message" class="result-details"></div>
+            <button onclick="location.reload()">重新測驗</button>
+        </div>
+    </div>
+
+    <!-- 休息時間遮罩 -->
+    <div id="break-overlay">
+        <h2>休息時間</h2>
+        <p id="break-timer" style="font-size: 28px; font-weight: bold; color: #f0ad4e;">剩餘休息時間: 10:00</p>
+    </div>
+
+    <script>
+        // ISO 27001 綜合互動題庫 (25題示範：涵蓋5大類組 × 5種題型)
+        const questionBank = [
+            // --- 單元 1: 管理系統概念 ---
+            { type: 'single', category: 1, question: "High Level Structure (HLS) 的主要目的是什麼？", options: ["為了增加驗證機構的收入", "使不同的 ISO 管理系統標準（如 ISO 27001, ISO 9001）具有一致的架構與核心文字，易於整合", "為了讓標準更難閱讀", "專門針對資訊安全設計的加密演算法"], answer: 1 },
+            { type: 'multiple', category: 1, question: "【多選】資訊安全管理系統 (ISMS) 的三大核心屬性（CIA）包含下列哪些？", options: ["機密性 (Confidentiality)", "複雜性 (Complexity)", "完整性 (Integrity)", "可用性 (Availability)"], answer: [0, 2, 3] },
+            { type: 'fill', category: 1, question: "請將正確的詞彙拖放至空格中：\nISMS 採用了 PDCA 循環，其中 P 代表 _ ， D 代表 _ ， C 代表 _ ， A 代表 _ 。", words: ["計畫 (Plan)", "執行 (Do)", "查核 (Check)", "行動 (Act)", "預防 (Prevent)"], answer: ["計畫 (Plan)", "執行 (Do)", "查核 (Check)", "行動 (Act)"] },
+            { type: 'match', category: 1, question: "將下列名詞與其對應的定義進行匹配：", pairs: [{ left: "資訊安全", right: "保護資訊的機密性、完整性與可用性" }, { left: "風險", right: "不確定性對目標的影響" }, { left: "不符合事項", right: "未滿足某項要求" }] },
+            { type: 'order', category: 1, question: "請依據 ISO 高階架構 (HLS)，將下列標準條文 (Clause 4~7) 依序排列：", items: ["了解組織及其前後環境 (Clause 4)", "領導力 (Clause 5)", "規劃 (Clause 6)", "支援 (Clause 7)"], answer: [0, 1, 2, 3] },
+
+            // --- 單元 2: 稽核概念與責任 ---
+            { type: 'single', category: 2, question: "「稽核證據 (Audit Evidence)」的定義是什麼？", options: ["稽核員的主觀猜測", "與稽核準則相關且可查證之紀錄、事實陳述或其他資訊", "受稽部門主管的口頭保證（無其他佐證）", "競爭對手的商業機密"], answer: 1 },
+            { type: 'multiple', category: 2, question: "【多選】依據 ISO 19011，稽核員應具備的原則包含哪些？", options: ["誠正 (Integrity)", "偏見與主觀判斷", "保密性 (Confidentiality)", "獨立性 (Independence)"], answer: [0, 2, 3] },
+            { type: 'fill', category: 2, question: "請將正確的詞彙拖放至空格中：\n內部稽核又稱為 _ 稽核；而驗證機構來進行的稽核屬於 _ 稽核。", words: ["第一方", "第二方", "第三方", "第四方"], answer: ["第一方", "第三方"] },
+            { type: 'match', category: 2, question: "將下列稽核角色與其職責進行匹配：", pairs: [{ left: "主導稽核員", right: "負責管理整個稽核團隊與稽核計畫" }, { left: "嚮導 (Guide)", right: "協助稽核團隊，但不參與稽核過程" }, { left: "觀察員 (Observer)", right: "陪同稽核團隊，但不干預或影響稽核" }] },
+            { type: 'order', category: 2, question: "請將「一般稽核生命週期」的五大階段依序排列：", items: ["起始稽核 (Initiating)", "準備稽核活動 (Preparing)", "執行稽核活動 (Conducting)", "準備與發布稽核報告 (Reporting)", "完成稽核 (Closing)"], answer: [0, 1, 2, 3, 4] },
+
+            // --- 單元 3: 稽核規劃 ---
+            { type: 'single', category: 3, question: "在第三方認證中，「階段一稽核 (Stage 1 Audit)」的主要目的是什麼？", options: ["發放 ISO 27001 證書", "審查客戶的文件化資訊，並評估其是否準備好進入階段二現場稽核", "盤點客戶的所有電腦設備", "對員工進行資安考試"], answer: 1 },
+            { type: 'multiple', category: 3, question: "【多選】「稽核計畫 (Audit Plan)」中通常必須包含哪些資訊？", options: ["稽核目標", "稽核範圍", "所有受稽人員的薪資", "預計的稽核日期與時間表"], answer: [0, 1, 3] },
+            { type: 'fill', category: 3, question: "請將正確的詞彙拖放至空格中：\n稽核計畫應由 _ 負責編製，並與 _ 進行溝通及確認。", words: ["主導稽核員", "受稽者 (Auditee)", "外部顧問", "驗證機構總經理"], answer: ["主導稽核員", "受稽者 (Auditee)"] },
+            { type: 'match', category: 3, question: "將稽核規劃的相關名詞進行匹配：", pairs: [{ left: "稽核範圍 (Audit Scope)", right: "稽核的界線與界限，包含實體位置、組織單位等" }, { left: "稽核準則 (Audit Criteria)", right: "用以比較客觀證據的要求集合 (如政策、程序、ISO標準)" }, { left: "稽核發現 (Audit Findings)", right: "收集到的稽核證據對抗稽核準則所評估的結果" }] },
+            { type: 'order', category: 3, question: "在規劃與準備稽核時，請將下列步驟依序排列：", items: ["審查文件化資訊", "決定稽核範圍與目標", "編製稽核計畫 (Audit Plan)", "指派稽核團隊的工作"], answer: [1, 0, 2, 3] },
+
+            // --- 單元 4: 稽核執行 ---
+            { type: 'single', category: 4, question: "【情境題】在巡視機房時，稽核員發現機房大門未關妥且無人看管。稽核員下一步最正確的行動是？", options: ["立刻在報告上寫下『重大缺失』", "直接把門鎖上並沒收鑰匙", "向陪同的 IT 主管詢問原因，並要求查看機房進出管制程序及相關紀錄", "忽略它，因為冷氣壞了需要通風"], answer: 2 },
+            { type: 'multiple', category: 4, question: "【多選】在現場稽核期間，稽核員可透過哪些方式收集「稽核證據」？", options: ["訪談員工", "觀察作業流程", "未經同意私自翻閱員工個人抽屜", "審查文件與紀錄"], answer: [0, 1, 3] },
+            { type: 'fill', category: 4, question: "【情境題】拖放填空：\n若組織發生了資安事件但未填寫通報單，這違反了附錄 A 中的 _ 管理；若員工將密碼寫在便利貼上，則違反了 _ 原則。", words: ["資訊安全事件", "桌面與螢幕淨空", "密碼安全", "備份"], answer: ["資訊安全事件", "桌面與螢幕淨空"] },
+            { type: 'match', category: 4, question: "【情境匹配】將稽核員觀察到的現象，匹配到最可能違反的 ISO 27001 條文/控制措施：", pairs: [{ left: "沒有為新進員工辦理資安訓練", right: "7.2 能力 / 7.3 認知" }, { left: "高階主管從未參與管理階層審查會議", right: "9.3 管理階層審查" }, { left: "未更新防毒軟體導致中毒", right: "附錄 A: 惡意軟體防護" }] },
+            { type: 'order', category: 4, question: "請將「起始會議 (Opening Meeting)」通常應進行的議程依序排列：", items: ["介紹稽核團隊成員", "確認稽核目標、範圍與準則", "說明稽核方法與抽樣風險", "確認結束會議的時間"], answer: [0, 1, 2, 3] },
+
+            // --- 單元 5: 稽核報告與結束 ---
+            { type: 'single', category: 5, question: "誰對「稽核報告 (Audit Report)」擁有最終的擁有權？", options: ["主導稽核員", "稽核客戶 (Audit Client)", "驗證機構", "全體員工"], answer: 1 },
+            { type: 'multiple', category: 5, question: "【多選】一份完整的不符合事項報告 (Nonconformity Report) 必須包含哪些要素？", options: ["稽核證據 (證明缺失的事實)", "稽核準則 (違反了哪一條規定)", "稽核員的個人情緒", "不符合事項的明確陳述"], answer: [0, 1, 3] },
+            { type: 'fill', category: 5, question: "拖放填空：\n針對不符合事項，受稽組織必須進行 _ 分析，並提出 _ 以防止問題再次發生。", words: ["根本原因 (Root Cause)", "矯正措施 (Corrective Action)", "成本效益", "懲處名單"], answer: ["根本原因 (Root Cause)", "矯正措施 (Corrective Action)"] },
+            { type: 'match', category: 5, question: "【判定題】將下列稽核發現匹配到正確的等級：", pairs: [{ left: "完全未執行內部稽核 (系統性崩潰)", right: "主要不符合事項 (Major NC)" }, { left: "抽查 20 台電腦發現 1 台未設螢幕保護鎖", right: "次要不符合事項 (Minor NC)" }, { left: "現有流程合規，但可導入自動化工具提升效率", right: "建議事項 (OFI)" }] },
+            { type: 'order', category: 5, question: "請將「結束會議 (Closing Meeting)」的標準流程依序排列：", items: ["感謝受稽單位的協助", "重申稽核抽樣的限制與風險", "提出稽核發現 (包含 NC 與 OFI)", "說明後續的矯正措施提交時程與發證建議"], answer: [0, 1, 2, 3] }
+        ];
+
+        let examQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 6300; // 1小時45分鐘 = 105分鐘 = 6300秒
+        let timerInterval;
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const interactiveArea = document.getElementById('interactive-area');
+        const nextBtn = document.getElementById('next-btn');
+        const tracker = document.getElementById('question-tracker');
+        const timerDisplay = document.getElementById('timer');
+        const breakBtn = document.getElementById('break-btn');
+        const breakOverlay = document.getElementById('break-overlay');
+        const breakTimerDisplay = document.getElementById('break-timer');
+
+        // 全域拖放狀態變數
+        let draggedElement = null;
+
+        document.getElementById('start-btn').addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', handleNextQuestion);
+        breakBtn.addEventListener('click', handleBreak);
+
+        // 初始化拖放事件監聽器 (Event Delegation)
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('draggable') || e.target.classList.contains('order-item')) {
+                draggedElement = e.target;
+                e.target.classList.add('dragging');
+            }
+        });
+        document.addEventListener('dragend', (e) => {
+            if (e.target.classList.contains('draggable') || e.target.classList.contains('order-item')) {
+                e.target.classList.remove('dragging');
+                draggedElement = null;
+                checkEnableNext();
+            }
+        });
+        document.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            // 處理排序題的換位邏輯
+            if (e.target.classList.contains('order-item') && draggedElement && draggedElement.classList.contains('order-item')) {
+                const container = e.target.parentNode;
+                const items = [...container.querySelectorAll('.order-item:not(.dragging)')];
+                let afterElement = items.reduce((closest, child) => {
+                    const box = child.getBoundingClientRect();
+                    const offset = e.clientY - box.top - box.height / 2;
+                    if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+                    else return closest;
+                }, { offset: Number.NEGATIVE_INFINITY }).element;
+                
+                if (afterElement == null) container.appendChild(draggedElement);
+                else container.insertBefore(draggedElement, afterElement);
+            }
+        });
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            // 處理填空與匹配題的放入邏輯
+            if (e.target.classList.contains('drop-zone') && draggedElement && draggedElement.classList.contains('draggable')) {
+                if (e.target.children.length > 0) document.getElementById('word-pool').appendChild(e.target.children[0]); // 擠回字庫
+                e.target.appendChild(draggedElement);
+            } else if (e.target.id === 'word-pool' && draggedElement && draggedElement.classList.contains('draggable')) {
+                e.target.appendChild(draggedElement); // 回收字庫
+            }
+            checkEnableNext();
+        });
+
+        // Fisher-Yates 洗牌演算法，確保陣列真正隨機打亂
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function generateExam() {
+            examQuestions = [];
+            // 因展示題庫共25題，此處修改為各單元全抽(共25題)。若擴充題庫，可改回 [6,6,6,14,8] 的40題配置
+            const distribution = [5, 5, 5, 5, 5]; 
+
+            for (let i = 1; i <= 5; i++) {
+                let catQs = questionBank.filter(q => q.category === i);
+                shuffleArray(catQs);
+                examQuestions.push(...catQs.slice(0, distribution[i - 1]));
+            }
+            
+            shuffleArray(examQuestions);
+        }
+
+        function startQuiz() {
+            startScreen.classList.remove('active');
+            quizScreen.classList.add('active');
+            generateExam();
+            startTimer();
+            loadQuestion();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                let h = Math.floor(timeLeft / 3600);
+                let m = Math.floor((timeLeft % 3600) / 60);
+                let s = timeLeft % 60;
+                timerDisplay.innerText = `剩餘時間: ${h}小時:${m < 10 ? '0' : ''}${m}分鐘:${s < 10 ? '0' : ''}${s}秒`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endQuiz(true); // 時間到強制結束
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            nextBtn.disabled = true;
+            const currentQuestion = examQuestions[currentQuestionIndex];
+            tracker.innerText = `題號: ${currentQuestionIndex + 1} / ${examQuestions.length}`;
+            questionText.innerText = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            optionsContainer.innerHTML = '';
+
+            currentQuestion.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const label = document.createElement('label');
+                label.style.display = 'block';
+                label.style.cursor = 'pointer';
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'answer';
+                radio.value = index;
+                radio.addEventListener('change', () => { nextBtn.disabled = false; });
+
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(option));
+                li.appendChild(label);
+                optionsContainer.appendChild(li);
+            });
+
+            if (currentQuestionIndex === examQuestions.length - 1) {
+                nextBtn.innerText = '送出並查看結果';
+            } else {
+                nextBtn.innerText = '下一題';
+            }
+        }
+
+        function handleNextQuestion() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                const answerIndex = parseInt(selectedOption.value);
+                if (answerIndex === examQuestions[currentQuestionIndex].answer) {
+                    score++;
+                }
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < examQuestions.length) {
+                loadQuestion();
+            } else {
+                endQuiz(false);
+            }
+        }
+
+        function handleBreak() {
+            // 彈出對話框詢問是否確定要休息
+            if (confirm('確定要休息嗎？點擊「確定」將暫停測驗時間，並開始 10 分鐘的休息。')) {
+                clearInterval(timerInterval); // 暫停主時間倒數
+                breakOverlay.classList.add('active'); // 顯示休息遮罩，防止繼續作答
+                
+                let breakTimeLeft = 600; // 10分鐘 = 600秒
+                breakTimerDisplay.innerText = `剩餘休息時間: 10:00`;
+                
+                const breakInterval = setInterval(() => {
+                    breakTimeLeft--;
+                    let bm = Math.floor(breakTimeLeft / 60);
+                    let bs = breakTimeLeft % 60;
+                    breakTimerDisplay.innerText = `剩餘休息時間: ${bm < 10 ? '0' : ''}${bm}:${bs < 10 ? '0' : ''}${bs}`;
+                    
+                    if (breakTimeLeft <= 0) {
+                        clearInterval(breakInterval); // 結束休息倒數
+                        breakOverlay.classList.remove('active'); // 移除遮罩
+                        startTimer(); // 自動恢復主時間倒數
+                    }
+                }, 1000);
+            }
+        }
+
+        function endQuiz(timeOut) {
+            clearInterval(timerInterval);
+            quizScreen.classList.remove('active');
+            resultScreen.classList.add('active');
+
+            const totalQuestions = examQuestions.length;
+            const passMark = Math.ceil(totalQuestions * 0.7); // 70% 及格 = 28分
+            const finalScorePercentage = Math.round((score / totalQuestions) * 100);
+            const isPass = score >= passMark;
+
+            let message = timeOut ? '<p class="fail">時間到！測驗已強制結束。</p>' : '';
+            message += `<p>你的總得分為：<strong>${score}</strong> 分 / 滿分 ${totalQuestions} 分</p>`;
+            message += `<p>正確率：${finalScorePercentage}%</p>`;
+            message += isPass ? `<p class="pass">🎉 恭喜您！您達到了 70% 的及格門檻（${passMark}分），通過了 ISO 27001 模擬測驗。</p>` : `<p class="fail">❌ 很遺憾，您未達 70% 的及格標準（${passMark}分），請再接再厲。</p>`;
+
+            document.getElementById('result-message').innerHTML = message;
+        }
+    </script>
+</body>
+</html>
