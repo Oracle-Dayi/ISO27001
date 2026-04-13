@@ -12,7 +12,7 @@
         h1 { font-size: 24px; color: #0056b3; margin-bottom: 20px; text-align: center; }
         .header-info { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
         .timer { color: #d9534f; }
-        .question { font-size: 18px; margin-bottom: 15px; }
+        .question { font-size: 16px; margin-bottom: 15px; white-space: pre-wrap; background-color: #f1f8ff; padding: 15px; border-left: 5px solid #0056b3; border-radius: 4px; }
         .options { list-style: none; padding: 0; }
         .options li { background: #f9f9f9; margin-bottom: 10px; padding: 10px 15px; border-radius: 5px; border: 1px solid #ddd; cursor: pointer; transition: background 0.3s; }
         .options li:hover { background: #e9ecef; }
@@ -48,10 +48,10 @@
             <h1>ISO 27001 模擬考試系統</h1>
             <p>歡迎進入 ISO 27001 資訊安全管理系統模擬測驗。本測驗依照正式考試架構設計：</p>
             <ul>
-                <li><strong>時間限制：</strong> 105 分鐘（1 小時 45 分鐘）</li>
-                <li><strong>測驗題數：</strong> 共 40 題（依照正式單元配比抽取）。</li>
+                <li><strong>時間限制：</strong> 1 小時 45 分鐘（全局倒數，各單元建議時間僅供參考）。</li>
+                <li><strong>測驗題數：</strong> 共 40 題（單元一~三各 6 題，單元四 14 題，單元五 8 題）。</li>
                 <li><strong>單向進行：</strong> 進入下一題後，<strong>無法回到上一題</strong>。</li>
-                <li><strong>自動計分：</strong> 測驗結束後將自動結算成績，滿分 40 分，及格門檻為 70%（28分）。</li>
+                <li><strong>自動計分：</strong> 測驗結束後將自動結算成績，滿分 80 分，及格門檻為 70%（56分）。<br>（配分：單元一~三 每題 1 分，單元四 每題 3 分，單元五 每題 2.5 分）</li>
             </ul>
             <button id="start-btn">開始測驗</button>
         </div>
@@ -83,6 +83,7 @@
     <div id="break-overlay">
         <h2>休息時間</h2>
         <p id="break-timer" style="font-size: 28px; font-weight: bold; color: #f0ad4e;">剩餘休息時間: 10:00</p>
+        <button id="resume-btn" style="margin-top: 20px; width: auto; padding: 10px 20px;">提早結束休息並繼續測驗</button>
     </div>
 
     <script>
@@ -110,25 +111,26 @@
             { type: 'order', category: 3, question: "在規劃與準備稽核時，請將下列步驟依序排列：", items: ["審查文件化資訊", "決定稽核範圍與目標", "編製稽核計畫 (Audit Plan)", "指派稽核團隊的工作"], answer: [1, 0, 2, 3] },
 
             // --- 單元 4: 稽核執行 ---
-            { type: 'single', category: 4, question: "【情境題】在巡視機房時，稽核員發現機房大門未關妥且無人看管。稽核員下一步最正確的行動是？", options: ["立刻在報告上寫下『重大缺失』", "直接把門鎖上並沒收鑰匙", "向陪同的 IT 主管詢問原因，並要求查看機房進出管制程序及相關紀錄", "忽略它，因為冷氣壞了需要通風"], answer: 2 },
-            { type: 'multiple', category: 4, question: "【多選】在現場稽核期間，稽核員可透過哪些方式收集「稽核證據」？", options: ["訪談員工", "觀察作業流程", "未經同意私自翻閱員工個人抽屜", "審查文件與紀錄"], answer: [0, 1, 3] },
-            { type: 'fill', category: 4, question: "【情境題】拖放填空：\n若組織發生了資安事件但未填寫通報單，這違反了附錄 A 中的 _ 管理；若員工將密碼寫在便利貼上，則違反了 _ 原則。", words: ["資訊安全事件", "桌面與螢幕淨空", "密碼安全", "備份"], answer: ["資訊安全事件", "桌面與螢幕淨空"] },
-            { type: 'match', category: 4, question: "【情境匹配】將稽核員觀察到的現象，匹配到最可能違反的 ISO 27001 條文/控制措施：", pairs: [{ left: "沒有為新進員工辦理資安訓練", right: "7.2 能力 / 7.3 認知" }, { left: "高階主管從未參與管理階層審查會議", right: "9.3 管理階層審查" }, { left: "未更新防毒軟體導致中毒", right: "附錄 A: 惡意軟體防護" }] },
-            { type: 'order', category: 4, question: "請將「起始會議 (Opening Meeting)」通常應進行的議程依序排列：", items: ["介紹稽核團隊成員", "確認稽核目標、範圍與準則", "說明稽核方法與抽樣風險", "確認結束會議的時間"], answer: [0, 1, 2, 3] },
+            { type: 'single', category: 4, question: "【長篇情境題】在對某電子商務公司進行 ISO 27001 第三方稽核時，主導稽核員正在檢視『供應商關係的資訊安全』(A.15)。IT 經理表示：『我們已經將所有的核心客戶資料庫與網站代管服務，全部轉移到全球知名的頂級雲端服務供應商 (CSP)。因為他們本身已經通過了 ISO 27001 與 SOC 2 認證，所以我們公司內部不需要再針對這些託管資料制定任何備份計畫、不需要進行復原測試，也不需要去審查他們的安全報告。他們的合約就是最好的安全保證。』當稽核員要求查看雙方的服務級別協議 (SLA) 以及組織如何監控該 CSP 的資安績效紀錄時，IT 經理無法提供任何文件，並再次強調『這不是我們的責任』。\n\n針對此情境，作為稽核員，您最正確的下一步或判斷為何？", options: ["同意 IT 經理的說法，因為頂級 CSP 的認證已足夠涵蓋組織的風險", "要求 IT 經理立刻打電話給 CSP 要求提供備份還原測試報告", "判定組織未對供應商的安全交付進行監控與審查，且未依自身營運持續需求規劃雲端服務要求", "直接終止稽核，因為組織將核心業務外包違反了 ISO 27001 規定"], answer: 2 },
+            { type: 'multiple', category: 4, question: "【長篇情境題 - 多選】稽核員正在查核某製造廠的『實體與環境安全』(Clause 8 / A.7)。稽核員在廠區主管的陪同下進入了被劃定為『安全區域』的伺服器機房。稽核員觀察到以下幾個現象：\n1. 機房大門使用的是一般喇叭鎖，且為了讓剛洗完的地板通風，大門正被一個紙箱擋住保持敞開。\n2. 機房內有一位穿著外部制服的冷氣維修人員正在工作，但現場除了稽核員與陪同主管外，並沒有其他內部 IT 人員在場監督。\n3. 機房桌上放了一本『訪客登記簿』，但該名維修人員並未填寫任何進出紀錄。\n4. 當稽核員詢問陪同主管這是否符合規定時，主管回答：『他每個月都來保養，大家都認識他了，不需要這麼麻煩。』\n\n依據上述情境，組織違反了哪些 ISO 27001 的控制措施或原則？", options: ["實體安全邊界與安全區域的保護不足", "訪客與外部人員的實體存取控制失效", "違反了加密控制措施 (Cryptographic controls)", "未落實資訊安全事件通報程序"], answer: [0, 1] },
+            { type: 'fill', category: 4, question: "【長篇情境題 - 拖放填空】在訪談資安風險經理時，稽核員檢視了最新的《年度資訊安全風險評鑑報告》。報告中指出，某項核心 ERP 系統存在『未修補的已知重大軟體漏洞』，導致遭遇勒索軟體攻擊的機率極高，風險等級被評為『不可接受之重大風險』。\n\n然而，當稽核員要求查看該風險的後續處置狀況時，風險經理表示：『因為修補該漏洞需要停機 48 小時，業務部門強烈反對，所以我們決定什麼都不做，直接承擔這個風險。』但該決定並未獲得 _ 的簽署與正式核准。此外，組織也未將此決策更新至 _ 之中，導致現有的文件無法真實反映組織的風險處理現況與控制措施的適用性。", words: ["風險擁有者 (Risk Owner)", "適用性聲明書 (SoA)", "內部稽核員", "資訊安全政策"], answer: ["風險擁有者 (Risk Owner)", "適用性聲明書 (SoA)"] },
+            { type: 'match', category: 4, question: "【長篇情境題 - 匹配】稽核團隊在執行了為期三天的現場稽核後，收集到了多項稽核證據。請依據以下複雜的查核情境，將其正確匹配至最合適的稽核發現分類：", pairs: [{ left: "查核 50 台員工電腦，發現有 3 台的防毒軟體病毒碼超過兩個月未更新，其餘 47 台皆正常且由派發伺服器統一控管。", right: "次要不符合事項 (Minor NC)" }, { left: "組織完全沒有定義風險評估的準則（如風險接受與評估準則），也沒有產出任何風險評鑑報告，導致 ISMS 缺乏風險管理基礎。", right: "主要不符合事項 (Major NC)" }, { left: "員工離職流程都有確實填寫並停用帳號，但在『資產交接』的表單上，目前的紙本作業常有遺漏簽名的風險，若能導入電子簽核系統將能有效降低失誤率。", right: "建議事項 (OFI)" }] },
+            { type: 'order', category: 4, question: "【長篇情境題 - 拖放排序】某金融機構在週五下午 3 點發生了嚴重的資料外洩事件，客服部門接獲大量客戶投訴表示信用卡遭盜刷。IT 部門初步調查發現，是外部駭客利用釣魚郵件取得了內部員工的高權限帳號，進而存取了客戶資料庫。\n\n依據 ISO 27001 的『資訊安全事件管理』要求以及標準的事故應變生命週期，請協助該機構的事故應變小組 (IR Team) 將下列處理步驟依據正確的時間先後順序進行排列：", items: ["識別與通報：員工或監控系統發現異常，並通報給資安窗口", "分類與評估：評估嚴重程度並確認是否升級為資訊安全事件", "遏制與根除：中斷被駭帳號連線，隔離受感染系統防止損害擴大", "復原：從備份中還原資料，確認無潛在威脅後逐步恢復服務上線", "事後檢討與學習：召開檢討會議，分析根本原因並更新控制措施"], answer: [0, 1, 2, 3, 4] },
 
             // --- 單元 5: 稽核報告與結束 ---
-            { type: 'single', category: 5, question: "誰對「稽核報告 (Audit Report)」擁有最終的擁有權？", options: ["主導稽核員", "稽核客戶 (Audit Client)", "驗證機構", "全體員工"], answer: 1 },
-            { type: 'multiple', category: 5, question: "【多選】一份完整的不符合事項報告 (Nonconformity Report) 必須包含哪些要素？", options: ["稽核證據 (證明缺失的事實)", "稽核準則 (違反了哪一條規定)", "稽核員的個人情緒", "不符合事項的明確陳述"], answer: [0, 1, 3] },
-            { type: 'fill', category: 5, question: "拖放填空：\n針對不符合事項，受稽組織必須進行 _ 分析，並提出 _ 以防止問題再次發生。", words: ["根本原因 (Root Cause)", "矯正措施 (Corrective Action)", "成本效益", "懲處名單"], answer: ["根本原因 (Root Cause)", "矯正措施 (Corrective Action)"] },
-            { type: 'match', category: 5, question: "【判定題】將下列稽核發現匹配到正確的等級：", pairs: [{ left: "完全未執行內部稽核 (系統性崩潰)", right: "主要不符合事項 (Major NC)" }, { left: "抽查 20 台電腦發現 1 台未設螢幕保護鎖", right: "次要不符合事項 (Minor NC)" }, { left: "現有流程合規，但可導入自動化工具提升效率", right: "建議事項 (OFI)" }] },
-            { type: 'order', category: 5, question: "請將「結束會議 (Closing Meeting)」的標準流程依序排列：", items: ["感謝受稽單位的協助", "重申稽核抽樣的限制與風險", "提出稽核發現 (包含 NC 與 OFI)", "說明後續的矯正措施提交時程與發證建議"], answer: [0, 1, 2, 3] }
+            { type: 'single', category: 5, question: "【長篇情境題】在結束會議 (Closing Meeting) 前，主導稽核員正在準備不符合事項報告 (NCR)。其中一項缺失為：『抽查 10 份新進人員的報到表，發現有 8 份並未簽署保密協議 (NDA)。』稽核員將此列為次要不符合事項。\n\n在結束會議上，人資主管對此項缺失表示強烈抗議，並大聲說：『我們公司規模這麼小，大家都是親戚朋友介紹進來的，根本不可能洩密！簽那個協議只是形式，你們不應該開這張缺失！』面對受稽部門主管的強烈反彈與拒絕接受，身為主導稽核員，您最合適的應對方式是什麼？", options: ["與人資主管大聲爭辯，並威脅如果不接受就直接判定稽核不通過", "立刻妥協，將該缺失從報告中刪除以維持雙方良好關係", "保持冷靜，說明 NDA 是控制要求與既定準則，若仍拒絕接受，則將此爭議記錄於報告中提交驗證機構", "請人資主管私下請稽核團隊吃飯，然後把缺失改為建議事項"], answer: 2 },
+            { type: 'multiple', category: 5, question: "【長篇情境題 - 多選】針對上個月外部稽核開立的『主要不符合事項 (Major NC)』：『組織未能在每年實施至少一次的營運持續演練(復原測試)』。受稽組織的 IT 部門提交了以下的『根本原因分析與矯正措施計畫 (CAP)』給主導稽核員審查。\n\n根本原因：『因為 IT 部門去年有三位資深工程師離職，人力嚴重不足，大家都在忙著處理日常維運，根本沒有時間去規劃和執行復原測試。』\n矯正措施：『IT 經理已經口頭警告剩下的工程師，要求他們明年一定要擠出時間來做測試。』\n\n身為負責審查該計畫的稽核員，您認為這份計畫存在哪些嚴重的問題，導致您必須『退回』該計畫要求重寫？", options: ["根本原因分析過於表象，未探討最高階層為何未介入資源分配與工作優先級", "矯正措施僅是『口頭警告』，並未實質解決資源不足的問題，也缺乏具體的執行時間表", "報告中沒有提供參與測試人員的餐費預算明細", "未建立可驗證的機制來確保未來的演練能夠如期執行"], answer: [0, 1, 3] },
+            { type: 'fill', category: 5, question: "【長篇情境題 - 拖放填空】主導稽核員正在撰寫最終的第三方驗證稽核報告 (Audit Report)。在撰寫『行政摘要 (Executive Summary)』時，報告必須清楚說明本次稽核的範圍、時間、以及稽核結論。\n\n對於稽核過程中發現的嚴重缺失，稽核員寫道：『在本次稽核中，共發現了 2 項 _ ，這表示組織的 ISMS 存在系統性失效的風險；因此，稽核團隊目前的建議是 _ 發放 ISO 27001 證書，直到組織提出有效的根本原因分析與矯正措施，並經稽核員驗證有效後，方可重新評估。』", words: ["主要不符合事項 (Major NC)", "次要不符合事項 (Minor NC)", "推薦 (Recommend)", "不推薦 (Not recommend)"], answer: ["主要不符合事項 (Major NC)", "不推薦 (Not recommend)"] },
+            { type: 'match', category: 5, question: "【長篇情境題 - 匹配】在第三方驗證的結束會議 (Closing Meeting) 中，主導稽核員需要向最高管理階層與各部門主管報告稽核結果。為確保會議順利進行並符合 ISO 19011 規範，請將主導稽核員的『發言情境』與其對應的『會議目的』進行匹配：", pairs: [{ left: "『本次稽核我們抽查了研發部 5 個專案中的 2 個，這意味著未被抽查到的專案可能仍存在未發現的風險。』", right: "重申稽核抽樣的限制與不確定性" }, { left: "『關於 A.8.1 的這張缺失單，由於貴公司昨天已經補齊了相關的文件簽核，我們決定將其降級。』", right: "澄清與解決受稽者對稽核發現的任何分歧與疑問" }, { left: "『針對這 3 張次要缺失單，請貴公司在 30 天內提交根本原因分析與矯正措施計畫。』", right: "說明後續行動的要求與時間表" }] },
+            { type: 'order', category: 5, question: "【長篇情境題 - 拖放排序】當外部驗證稽核結束，且主導稽核員在結束會議上宣布了多項不符合事項 (NC) 後，受稽組織與驗證機構之間將展開一系列的後續追蹤與發證流程。\n\n請將以下標準的『稽核後續行動與結案 (Post-Audit & Closing)』流程依序排列：", items: ["受稽組織針對缺失進行根本原因分析 (Root Cause Analysis)", "受稽組織制定並提交矯正措施計畫 (Corrective Action Plan)", "主導稽核員審查並接受矯正措施計畫的適切性", "受稽組織執行矯正措施，並提供實作證據 (或由稽核員安排跟催稽核)", "驗證機構完成技術審查，確認無未解決的 Major NC，正式核發證書"], answer: [0, 1, 2, 3, 4] }
         ];
 
         let examQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
-        let timeLeft = 6300; // 1小時45分鐘 = 105分鐘 = 6300秒
+        let timeLeft = 6300; // 1小時45分鐘 = 105分鐘 = 6300秒;
         let timerInterval;
+        let breakInterval; // 將 breakInterval 宣告在更廣的範圍
 
         const startScreen = document.getElementById('start-screen');
         const quizScreen = document.getElementById('quiz-screen');
@@ -154,7 +156,7 @@
         document.addEventListener('dragstart', (e) => {
             if (e.target.classList.contains('draggable') || e.target.classList.contains('order-item')) {
                 draggedElement = e.target;
-                e.target.classList.add('dragging');
+                setTimeout(() => e.target.classList.add('dragging'), 0);
             }
         });
         document.addEventListener('dragend', (e) => {
@@ -166,32 +168,42 @@
         });
         document.addEventListener('dragover', (e) => {
             e.preventDefault();
-            // 處理排序題的換位邏輯
-            if (e.target.classList.contains('order-item') && draggedElement && draggedElement.classList.contains('order-item')) {
-                const container = e.target.parentNode;
-                const items = [...container.querySelectorAll('.order-item:not(.dragging)')];
-                let afterElement = items.reduce((closest, child) => {
-                    const box = child.getBoundingClientRect();
-                    const offset = e.clientY - box.top - box.height / 2;
-                    if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
-                    else return closest;
-                }, { offset: Number.NEGATIVE_INFINITY }).element;
-                
-                if (afterElement == null) container.appendChild(draggedElement);
-                else container.insertBefore(draggedElement, afterElement);
+            const container = e.target.closest('.order-list');
+            if (container && draggedElement && draggedElement.classList.contains('order-item')) {
+                const afterElement = getDragAfterElement(container, e.clientY);
+                if (afterElement == null) {
+                    container.appendChild(draggedElement);
+                } else {
+                    container.insertBefore(draggedElement, afterElement);
+                }
             }
         });
         document.addEventListener('drop', (e) => {
             e.preventDefault();
-            // 處理填空與匹配題的放入邏輯
-            if (e.target.classList.contains('drop-zone') && draggedElement && draggedElement.classList.contains('draggable')) {
-                if (e.target.children.length > 0) document.getElementById('word-pool').appendChild(e.target.children[0]); // 擠回字庫
-                e.target.appendChild(draggedElement);
-            } else if (e.target.id === 'word-pool' && draggedElement && draggedElement.classList.contains('draggable')) {
-                e.target.appendChild(draggedElement); // 回收字庫
+            const dropZone = e.target.closest('.drop-zone');
+            if (dropZone && draggedElement && draggedElement.classList.contains('draggable')) {
+                if (dropZone.children.length > 0) {
+                    document.getElementById('word-pool').appendChild(dropZone.children[0]);
+                }
+                dropZone.appendChild(draggedElement);
+            } else if (e.target.closest('#word-pool') && draggedElement && draggedElement.classList.contains('draggable')) {
+                e.target.closest('#word-pool').appendChild(draggedElement);
             }
             checkEnableNext();
         });
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.order-item:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
 
         // Fisher-Yates 洗牌演算法，確保陣列真正隨機打亂
         function shuffleArray(array) {
@@ -203,15 +215,17 @@
 
         function generateExam() {
             examQuestions = [];
-            // 因展示題庫共25題，此處修改為各單元全抽(共25題)。若擴充題庫，可改回 [6,6,6,14,8] 的40題配置
-            const distribution = [5, 5, 5, 5, 5]; 
+            // 依照正式考試單元配置抽題數。若要用25題展示題庫，可改為 [5,5,5,5,5]
+            const distribution = [6, 6, 6, 14, 8]; 
 
             for (let i = 1; i <= 5; i++) {
                 let catQs = questionBank.filter(q => q.category === i);
-                shuffleArray(catQs);
-                examQuestions.push(...catQs.slice(0, distribution[i - 1]));
+                shuffleArray(catQs); // 該類別內部隨機洗牌
+                // 確保題庫足夠，不足則全抽
+                examQuestions.push(...catQs.slice(0, Math.min(distribution[i - 1], catQs.length)));
             }
             
+            // 打亂整份試卷的順序，使不同類別的題目交錯出現
             shuffleArray(examQuestions);
         }
 
@@ -275,7 +289,7 @@
             } else if (currentQuestion.type === 'fill') {
                 let qText = currentQuestion.question;
                 const parts = qText.split('_');
-                questionText.innerHTML = `${currentQuestionIndex + 1}. ` + parts.join('<span class="drop-zone"></span>');
+                questionText.innerHTML = `${currentQuestionIndex + 1}. ` + parts.map(part => `<span>${part}</span>`).join('<span class="drop-zone"></span>');
                 
                 let pool = document.createElement('div');
                 pool.id = 'word-pool'; pool.className = 'word-pool';
@@ -324,11 +338,13 @@
             } else {
                 nextBtn.innerText = '下一題';
             }
+            checkEnableNext();
         }
 
         // 檢查是否已作答以解鎖下一題按鈕
         function checkEnableNext() {
             const q = examQuestions[currentQuestionIndex];
+            if (!q) return;
             if (q.type === 'single') {
                 nextBtn.disabled = !document.querySelector('input[name="answer"]:checked');
             } else if (q.type === 'multiple') {
@@ -338,6 +354,8 @@
                 let allFilled = true;
                 zones.forEach(z => { if (z.children.length === 0) allFilled = false; });
                 nextBtn.disabled = !allFilled;
+            } else if (q.type === 'order') {
+                nextBtn.disabled = false;
             }
         }
 
@@ -350,16 +368,22 @@
                 if (sel && parseInt(sel.value) === currentQ.answer) isCorrect = true;
             } else if (currentQ.type === 'multiple') {
                 const sels = Array.from(document.querySelectorAll('input[name="answer"]:checked')).map(el => parseInt(el.value));
-                if (sels.length === currentQ.answer.length && currentQ.answer.every(val => sels.includes(val))) isCorrect = true;
+                const answer = currentQ.answer;
+                if (sels.length === answer.length && answer.every(val => sels.includes(val))) isCorrect = true;
             } else if (currentQ.type === 'fill') {
                 const zones = document.querySelectorAll('.drop-zone');
                 let correctCount = 0;
-                zones.forEach((z, idx) => { if (z.innerText === currentQ.answer[idx]) correctCount++; });
+                zones.forEach((z, idx) => { if (z.children[0] && z.children[0].innerText === currentQ.answer[idx]) correctCount++; });
                 if (correctCount === currentQ.answer.length) isCorrect = true;
             } else if (currentQ.type === 'match') {
                 const zones = document.querySelectorAll('.drop-zone');
                 let correctCount = 0;
-                zones.forEach((z, idx) => { if (z.innerText === currentQ.pairs[idx].right) correctCount++; });
+                zones.forEach((z) => {
+                    const leftText = z.previousElementSibling.innerText;
+                    const droppedText = z.children[0] ? z.children[0].innerText : null;
+                    const correctPair = currentQ.pairs.find(p => p.left === leftText);
+                    if (correctPair && droppedText === correctPair.right) correctCount++;
+                });
                 if (correctCount === currentQ.pairs.length) isCorrect = true;
             } else if (currentQ.type === 'order') {
                 const items = document.querySelectorAll('.order-item');
@@ -384,23 +408,30 @@
 
         function handleBreak() {
             // 彈出對話框詢問是否確定要休息
-            if (confirm('確定要休息嗎？點擊「確定」將暫停測驗時間，並開始 10 分鐘的休息。')) {
+            if (confirm('確定要休息嗎？點擊「確定」將暫停測驗時間，並開始 10 分鐘的休息。您可以隨時點擊按鈕提早結束休息。')) {
                 clearInterval(timerInterval); // 暫停主時間倒數
                 breakOverlay.classList.add('active'); // 顯示休息遮罩，防止繼續作答
                 
                 let breakTimeLeft = 600; // 10分鐘 = 600秒
                 breakTimerDisplay.innerText = `剩餘休息時間: 10:00`;
                 
-                const breakInterval = setInterval(() => {
+                const resumeBtn = document.getElementById('resume-btn');
+                const resumeHandler = () => {
+                    clearInterval(breakInterval);
+                    breakOverlay.classList.remove('active');
+                    startTimer();
+                    resumeBtn.removeEventListener('click', resumeHandler);
+                };
+                resumeBtn.addEventListener('click', resumeHandler);
+
+                breakInterval = setInterval(() => {
                     breakTimeLeft--;
                     let bm = Math.floor(breakTimeLeft / 60);
                     let bs = breakTimeLeft % 60;
                     breakTimerDisplay.innerText = `剩餘休息時間: ${bm < 10 ? '0' : ''}${bm}:${bs < 10 ? '0' : ''}${bs}`;
                     
                     if (breakTimeLeft <= 0) {
-                        clearInterval(breakInterval); // 結束休息倒數
-                        breakOverlay.classList.remove('active'); // 移除遮罩
-                        startTimer(); // 自動恢復主時間倒數
+                        resumeHandler(); // 時間到，執行與手動點擊相同的恢復邏輯
                     }
                 }, 1000);
             }
@@ -419,14 +450,14 @@
                 else if (q.category === 5) maxScore += 2.5;
             });
             
-            const passMark = Math.ceil(maxScore * 0.7); // 70% 及格
-            const finalScorePercentage = Math.round((score / maxScore) * 100);
+            const passMark = maxScore * 0.7;
+            const finalScorePercentage = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
             const isPass = score >= passMark;
 
             let message = timeOut ? '<p class="fail">時間到！測驗已強制結束。</p>' : '';
             message += `<p>你的總得分為：<strong>${score}</strong> 分 / 滿分 ${maxScore} 分</p>`;
             message += `<p>正確率：${finalScorePercentage}%</p>`;
-            message += isPass ? `<p class="pass">🎉 恭喜您！您達到了 70% 的及格門檻（${passMark}分），通過了 ISO 27001 模擬測驗。</p>` : `<p class="fail">❌ 很遺憾，您未達 70% 的及格標準（${passMark}分），請再接再厲。</p>`;
+            message += isPass ? `<p class="pass">🎉 恭喜您！您達到了 70% 的及格門檻（${passMark.toFixed(1)}分），通過了 ISO 27001 模擬測驗。</p>` : `<p class="fail">❌ 很遺憾，您未達 70% 的及格標準（${passMark.toFixed(1)}分），請再接再厲。</p>`;
 
             document.getElementById('result-message').innerHTML = message;
         }
