@@ -95,6 +95,7 @@
             { type: 'fill', category: 1, question: "請將正確的詞彙拖放至空格中：\nISMS 採用了 PDCA 循環，其中 P 代表 _ ， D 代表 _ ， C 代表 _ ， A 代表 _ 。", words: ["計畫 (Plan)", "執行 (Do)", "查核 (Check)", "行動 (Act)", "預防 (Prevent)"], answer: ["計畫 (Plan)", "執行 (Do)", "查核 (Check)", "行動 (Act)"] },
             { type: 'match', category: 1, question: "將下列名詞與其對應的定義進行匹配：", pairs: [{ left: "資訊安全", right: "保護資訊的機密性、完整性與可用性" }, { left: "風險", right: "不確定性對目標的影響" }, { left: "不符合事項", right: "未滿足某項要求" }] },
             { type: 'order', category: 1, question: "請依據 ISO 高階架構 (HLS)，將下列標準條文 (Clause 4~7) 依序排列：", items: ["了解組織及其前後環境 (Clause 4)", "領導力 (Clause 5)", "規劃 (Clause 6)", "支援 (Clause 7)"], answer: [0, 1, 2, 3] },
+            { type: 'single', category: 1, question: "在建立資訊安全管理系統 (ISMS) 時，『了解組織及其前後環境 (Context of the organization)』的主要目的是什麼？", options: ["為了應付外部稽核員的檢查清單", "識別可能影響 ISMS 達成其預期結果之內部與外部議題", "蒐集員工的個人隱私資料", "決定 IT 部門的年度預算上限"], answer: 1 },
 
             // --- 單元 2: 稽核概念與責任 ---
             { type: 'single', category: 2, question: "「稽核證據 (Audit Evidence)」的定義是什麼？", options: ["稽核員的主觀猜測", "與稽核準則相關且可查證之紀錄、事實陳述或其他資訊", "受稽部門主管的口頭保證（無其他佐證）", "競爭對手的商業機密"], answer: 1 },
@@ -102,6 +103,7 @@
             { type: 'fill', category: 2, question: "請將正確的詞彙拖放至空格中：\n內部稽核又稱為 _ 稽核；而驗證機構來進行的稽核屬於 _ 稽核。", words: ["第一方", "第二方", "第三方", "第四方"], answer: ["第一方", "第三方"] },
             { type: 'match', category: 2, question: "將下列稽核角色與其職責進行匹配：", pairs: [{ left: "主導稽核員", right: "負責管理整個稽核團隊與稽核計畫" }, { left: "嚮導 (Guide)", right: "協助稽核團隊，但不參與稽核過程" }, { left: "觀察員 (Observer)", right: "陪同稽核團隊，但不干預或影響稽核" }] },
             { type: 'order', category: 2, question: "請將「一般稽核生命週期」的五大階段依序排列：", items: ["起始稽核 (Initiating)", "準備稽核活動 (Preparing)", "執行稽核活動 (Conducting)", "準備與發布稽核報告 (Reporting)", "完成稽核 (Closing)"], answer: [0, 1, 2, 3, 4] },
+            { type: 'multiple', category: 2, question: "【多選】依據 ISO 19011，執行內部或外部稽核時，稽核員必須嚴格遵守的『稽核原則』包含下列哪些？", options: ["客觀性與獨立性 (Independence)", "基於證據的方法 (Evidence-based approach)", "主觀偏見 (Subjectivity)", "合理照料 (Due professional care)"], answer: [0, 1, 3] },
 
             // --- 單元 3: 稽核規劃 ---
             { type: 'single', category: 3, question: "在第三方認證中，「階段一稽核 (Stage 1 Audit)」的主要目的是什麼？", options: ["發放 ISO 27001 證書", "審查客戶的文件化資訊，並評估其是否準備好進入階段二現場稽核", "盤點客戶的所有電腦設備", "對員工進行資安考試"], answer: 1 },
@@ -109,6 +111,7 @@
             { type: 'fill', category: 3, question: "請將正確的詞彙拖放至空格中：\n稽核計畫應由 _ 負責編製，並與 _ 進行溝通及確認。", words: ["主導稽核員", "受稽者 (Auditee)", "外部顧問", "驗證機構總經理"], answer: ["主導稽核員", "受稽者 (Auditee)"] },
             { type: 'match', category: 3, question: "將稽核規劃的相關名詞進行匹配：", pairs: [{ left: "稽核範圍 (Audit Scope)", right: "稽核的界線與界限，包含實體位置、組織單位等" }, { left: "稽核準則 (Audit Criteria)", right: "用以比較客觀證據的要求集合 (如政策、程序、ISO標準)" }, { left: "稽核發現 (Audit Findings)", right: "收集到的稽核證據對抗稽核準則所評估的結果" }] },
             { type: 'order', category: 3, question: "在規劃與準備稽核時，請將下列步驟依序排列：", items: ["審查文件化資訊", "決定稽核範圍與目標", "編製稽核計畫 (Audit Plan)", "指派稽核團隊的工作"], answer: [1, 0, 2, 3] },
+            { type: 'single', category: 3, question: "關於『階段一稽核 (Stage 1 Audit)』的執行重點，下列敘述何者最為正確？", options: ["直接前往機房檢查防火牆設定", "主要是審查客戶的文件化資訊，並評估組織對階段二現場稽核的準備情況", "開立所有的不符合事項報告 (NCR) 並發放證書", "要求組織當場解僱不遵守規定的員工"], answer: 1 },
 
             // --- 單元 4: 稽核執行 ---
             { type: 'single', category: 4, question: "【長篇情境題】在對某電子商務公司進行 ISO 27001 第三方稽核時，主導稽核員正在檢視『供應商關係的資訊安全』(A.15)。IT 經理表示：『我們已經將所有的核心客戶資料庫與網站代管服務，全部轉移到全球知名的頂級雲端服務供應商 (CSP)。因為他們本身已經通過了 ISO 27001 與 SOC 2 認證，所以我們公司內部不需要再針對這些託管資料制定任何備份計畫、不需要進行復原測試，也不需要去審查他們的安全報告。他們的合約就是最好的安全保證。』當稽核員要求查看雙方的服務級別協議 (SLA) 以及組織如何監控該 CSP 的資安績效紀錄時，IT 經理無法提供任何文件，並再次強調『這不是我們的責任』。\n\n針對此情境，作為稽核員，您最正確的下一步或判斷為何？", options: ["同意 IT 經理的說法，因為頂級 CSP 的認證已足夠涵蓋組織的風險", "要求 IT 經理立刻打電話給 CSP 要求提供備份還原測試報告", "判定組織未對供應商的安全交付進行監控與審查，且未依自身營運持續需求規劃雲端服務要求", "直接終止稽核，因為組織將核心業務外包違反了 ISO 27001 規定"], answer: 2 },
@@ -116,13 +119,25 @@
             { type: 'fill', category: 4, question: "【長篇情境題 - 拖放填空】在訪談資安風險經理時，稽核員檢視了最新的《年度資訊安全風險評鑑報告》。報告中指出，某項核心 ERP 系統存在『未修補的已知重大軟體漏洞』，導致遭遇勒索軟體攻擊的機率極高，風險等級被評為『不可接受之重大風險』。\n\n然而，當稽核員要求查看該風險的後續處置狀況時，風險經理表示：『因為修補該漏洞需要停機 48 小時，業務部門強烈反對，所以我們決定什麼都不做，直接承擔這個風險。』但該決定並未獲得 _ 的簽署與正式核准。此外，組織也未將此決策更新至 _ 之中，導致現有的文件無法真實反映組織的風險處理現況與控制措施的適用性。", words: ["風險擁有者 (Risk Owner)", "適用性聲明書 (SoA)", "內部稽核員", "資訊安全政策"], answer: ["風險擁有者 (Risk Owner)", "適用性聲明書 (SoA)"] },
             { type: 'match', category: 4, question: "【長篇情境題 - 匹配】稽核團隊在執行了為期三天的現場稽核後，收集到了多項稽核證據。請依據以下複雜的查核情境，將其正確匹配至最合適的稽核發現分類：", pairs: [{ left: "查核 50 台員工電腦，發現有 3 台的防毒軟體病毒碼超過兩個月未更新，其餘 47 台皆正常且由派發伺服器統一控管。", right: "次要不符合事項 (Minor NC)" }, { left: "組織完全沒有定義風險評估的準則（如風險接受與評估準則），也沒有產出任何風險評鑑報告，導致 ISMS 缺乏風險管理基礎。", right: "主要不符合事項 (Major NC)" }, { left: "員工離職流程都有確實填寫並停用帳號，但在『資產交接』的表單上，目前的紙本作業常有遺漏簽名的風險，若能導入電子簽核系統將能有效降低失誤率。", right: "建議事項 (OFI)" }] },
             { type: 'order', category: 4, question: "【長篇情境題 - 拖放排序】某金融機構在週五下午 3 點發生了嚴重的資料外洩事件，客服部門接獲大量客戶投訴表示信用卡遭盜刷。IT 部門初步調查發現，是外部駭客利用釣魚郵件取得了內部員工的高權限帳號，進而存取了客戶資料庫。\n\n依據 ISO 27001 的『資訊安全事件管理』要求以及標準的事故應變生命週期，請協助該機構的事故應變小組 (IR Team) 將下列處理步驟依據正確的時間先後順序進行排列：", items: ["識別與通報：員工或監控系統發現異常，並通報給資安窗口", "分類與評估：評估嚴重程度並確認是否升級為資訊安全事件", "遏制與根除：中斷被駭帳號連線，隔離受感染系統防止損害擴大", "復原：從備份中還原資料，確認無潛在威脅後逐步恢復服務上線", "事後檢討與學習：召開檢討會議，分析根本原因並更新控制措施"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 4, question: "【長篇情境題】稽核員正在查核某軟體開發公司的『存取控制』(A.9)。稽核員發現，為了方便外部合作廠商進行系統維護，IT 部門開通了一個名為『vendor_admin』的 VPN 帳號，並將密碼統一設定為『Company@2023』。訪談中，IT 人員表示：『目前有三家不同的供應商、共約 10 位工程師共用這個帳號登入我們的核心伺服器，因為他們都是簽過保密協定的信任夥伴。』\n\n針對此情境，稽核員最主要的資安疑慮是什麼？", options: ["密碼長度不足，不符合複雜度要求", "共用帳號無法實現『可歸責性 (Accountability)』，發生資安事件時無法追溯是哪位特定人員的操作", "供應商太多家，會導致 VPN 頻寬不足", "應該請供應商自己架設 VPN 伺服器"], answer: 1 },
+            { type: 'multiple', category: 4, question: "【長篇情境題 - 多選】稽核員正在審查組織的『密碼與通行碼管理程序』。政策明確規定：『所有員工的開機密碼必須至少 12 碼，且每 90 天強制更換一次。』然而，當稽核員請系統管理員開啟 Active Directory (AD) 伺服器的設定畫面時，發現密碼長度被設定為『最少 8 碼』，且『密碼最長使用期限』被設定為『0 (密碼永不過期)』。\n管理員解釋：『政策是去年底才改的，但因為有很多老員工抱怨一直換密碼很麻煩，所以我們 IT 內部決定先不套用這些強制設定，等明年再說。』\n\n此情境反映了哪些 ISMS 的缺失？", options: ["文件化政策與實際技術控制措施脫鉤 (未落實)", "未經授權或正式變更管理程序，IT 人員私自豁免了安全控制", "密碼長度設定為 8 碼會導致系統直接當機", "缺乏對控制措施有效性的監督與審查"], answer: [0, 1, 3] },
+            { type: 'fill', category: 4, question: "【長篇情境題 - 拖放填空】在遠距辦公 (Teleworking) 的查核中，稽核員發現員工可以將含有機密客戶名單的報表下載到自己的私人筆記型電腦中，且該私人電腦並未安裝公司的端點防護軟體 (EDR)，也未進行硬碟加密。\n\n這顯示組織在附錄 A 的 _ 控制措施上存在嚴重漏洞。為了解決這個問題，組織應該實施 _ 解決方案，以防止敏感資料在未經授權的個人設備上被存取或外流。", words: ["遠距工作安全", "資料外洩防護 (DLP)", "實體環境保護", "時鐘同步"], answer: ["遠距工作安全", "資料外洩防護 (DLP)"] },
+            { type: 'match', category: 4, question: "【長篇情境題 - 匹配】稽核員在檢視系統維運紀錄時，發現了多個潛在的異常情況。請將這些觀察到的『情境事實』匹配到對應的『控制措施失效』：", pairs: [{ left: "機房的溫度感測器壞了三個月，無人發現也未維修", right: "支援性基礎設施 (Supporting utilities)" }, { left: "離職員工的帳號在離職兩週後仍有成功登入 ERP 系統的紀錄", right: "存取權限的移除或調整" }, { left: "員工可以隨意將公司電腦上的防毒軟體解除安裝", right: "惡意軟體防護 (Protection against malware)" }] },
+            { type: 'order', category: 4, question: "【長篇情境題 - 拖放排序】某醫療機構決定將其內部的『病歷管理系統』進行重大版本更新。依據『系統取得、開發與維護』的規範，請將下列安全的系統開發生命週期 (Secure SDLC) 步驟，依正確的時間順序排列：", items: ["需求分析階段：將資訊安全與個資保護需求納入系統規格", "設計階段：進行系統架構的安全設計與威脅建模", "開發階段：遵循安全編碼指南撰寫程式碼", "測試階段：執行弱點掃描、滲透測試與安全性驗證", "上線與維運：實施變更管理審查後正式上線，並持續監控"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 4, question: "【長篇情境題】稽核員在查核『資訊安全事件管理』時，詢問一名基層客服人員：『如果你在工作電腦上發現彈出勒索軟體的勒索畫面，你會怎麼做？』客服人員回答：『我會立刻把電腦重新開機，如果還是不行，我就會自己上網找破解軟體試試看，不想因為這樣被主管罵。』\n\n這段對話最能顯示組織在哪一個方面有明顯的缺失？", options: ["防毒軟體的防護能力太弱", "缺乏對員工的資訊安全認知教育，且未落實資安事件通報程序的宣導", "客服人員的電腦硬體太舊", "沒有實施多重要素驗證 (MFA)"], answer: 1 },
+            { type: 'multiple', category: 4, question: "【長篇情境題 - 多選】稽核員檢視組織的備份管理作業。IT 指南規定『每天進行增量備份，每週進行完整備份，且每半年需執行一次災難復原演練』。稽核員查閱紀錄發現，日常備份皆有成功執行的系統 Log，但在要求查看最近一次的『復原演練報告』時，IT 主管表示：『因為我們的儲存設備容量不夠，沒地方做測試還原，所以這三年來我們從來沒有實際測試過還原檔案。』\n\n此情形會引發哪些主要風險或缺失？", options: ["違反了定期測試並驗證備份資訊可復原性的要求", "當真實災難發生時，可能面臨備份資料損壞而無法還原的巨大風險", "會導致備份軟體授權過期", "營運持續計畫 (BCP) 的有效性無法得到保證"], answer: [0, 1, 3] },
+            { type: 'fill', category: 4, question: "【長篇情境題 - 拖放填空】在審查『密碼學控制措施』(A.8.24) 時，稽核員發現公司對外提供的電子商務網站仍在使用 HTTP 明文傳輸，且客戶密碼在資料庫中是以 MD5 進行雜湊 (無加鹽)。\n\n稽核員指出，這未能有效保護傳輸中的 _ ，且 MD5 早已被證實是不安全的演算法，組織應改用更強的演算法（如 AES-256 或 bcrypt）並妥善保護 _ 的生命週期，以確保加密機制的有效性。", words: ["機密性與完整性", "金鑰 (Keys)", "可用性", "防火牆硬體"], answer: ["機密性與完整性", "金鑰 (Keys)"] },
+            { type: 'match', category: 4, question: "【長篇情境題 - 匹配】在查核『營運持續 (Business Continuity)』時，稽核員發現組織的文件中充斥著各種專有名詞。請將下列營運持續的核心指標縮寫，匹配至其正確的定義：", pairs: [{ left: "RTO (復原時間目標)", right: "災難發生後，業務流程或 IT 系統必須恢復運作的時間限制" }, { left: "RPO (復原點目標)", right: "災難發生時，組織可容忍的最大資料遺失量 (時間點)" }, { left: "MTPD (最大可容忍中斷時間)", right: "服務中斷達到此時間後，將對組織造成無法挽回的致命衝擊" }] },
 
             // --- 單元 5: 稽核報告與結束 ---
             { type: 'single', category: 5, question: "【長篇情境題】在結束會議 (Closing Meeting) 前，主導稽核員正在準備不符合事項報告 (NCR)。其中一項缺失為：『抽查 10 份新進人員的報到表，發現有 8 份並未簽署保密協議 (NDA)。』稽核員將此列為次要不符合事項。\n\n在結束會議上，人資主管對此項缺失表示強烈抗議，並大聲說：『我們公司規模這麼小，大家都是親戚朋友介紹進來的，根本不可能洩密！簽那個協議只是形式，你們不應該開這張缺失！』面對受稽部門主管的強烈反彈與拒絕接受，身為主導稽核員，您最合適的應對方式是什麼？", options: ["與人資主管大聲爭辯，並威脅如果不接受就直接判定稽核不通過", "立刻妥協，將該缺失從報告中刪除以維持雙方良好關係", "保持冷靜，說明 NDA 是控制要求與既定準則，若仍拒絕接受，則將此爭議記錄於報告中提交驗證機構", "請人資主管私下請稽核團隊吃飯，然後把缺失改為建議事項"], answer: 2 },
             { type: 'multiple', category: 5, question: "【長篇情境題 - 多選】針對上個月外部稽核開立的『主要不符合事項 (Major NC)』：『組織未能在每年實施至少一次的營運持續演練(復原測試)』。受稽組織的 IT 部門提交了以下的『根本原因分析與矯正措施計畫 (CAP)』給主導稽核員審查。\n\n根本原因：『因為 IT 部門去年有三位資深工程師離職，人力嚴重不足，大家都在忙著處理日常維運，根本沒有時間去規劃和執行復原測試。』\n矯正措施：『IT 經理已經口頭警告剩下的工程師，要求他們明年一定要擠出時間來做測試。』\n\n身為負責審查該計畫的稽核員，您認為這份計畫存在哪些嚴重的問題，導致您必須『退回』該計畫要求重寫？", options: ["根本原因分析過於表象，未探討最高階層為何未介入資源分配與工作優先級", "矯正措施僅是『口頭警告』，並未實質解決資源不足的問題，也缺乏具體的執行時間表", "報告中沒有提供參與測試人員的餐費預算明細", "未建立可驗證的機制來確保未來的演練能夠如期執行"], answer: [0, 1, 3] },
             { type: 'fill', category: 5, question: "【長篇情境題 - 拖放填空】主導稽核員正在撰寫最終的第三方驗證稽核報告 (Audit Report)。在撰寫『行政摘要 (Executive Summary)』時，報告必須清楚說明本次稽核的範圍、時間、以及稽核結論。\n\n對於稽核過程中發現的嚴重缺失，稽核員寫道：『在本次稽核中，共發現了 2 項 _ ，這表示組織的 ISMS 存在系統性失效的風險；因此，稽核團隊目前的建議是 _ 發放 ISO 27001 證書，直到組織提出有效的根本原因分析與矯正措施，並經稽核員驗證有效後，方可重新評估。』", words: ["主要不符合事項 (Major NC)", "次要不符合事項 (Minor NC)", "推薦 (Recommend)", "不推薦 (Not recommend)"], answer: ["主要不符合事項 (Major NC)", "不推薦 (Not recommend)"] },
             { type: 'match', category: 5, question: "【長篇情境題 - 匹配】在第三方驗證的結束會議 (Closing Meeting) 中，主導稽核員需要向最高管理階層與各部門主管報告稽核結果。為確保會議順利進行並符合 ISO 19011 規範，請將主導稽核員的『發言情境』與其對應的『會議目的』進行匹配：", pairs: [{ left: "『本次稽核我們抽查了研發部 5 個專案中的 2 個，這意味著未被抽查到的專案可能仍存在未發現的風險。』", right: "重申稽核抽樣的限制與不確定性" }, { left: "『關於 A.8.1 的這張缺失單，由於貴公司昨天已經補齊了相關的文件簽核，我們決定將其降級。』", right: "澄清與解決受稽者對稽核發現的任何分歧與疑問" }, { left: "『針對這 3 張次要缺失單，請貴公司在 30 天內提交根本原因分析與矯正措施計畫。』", right: "說明後續行動的要求與時間表" }] },
-            { type: 'order', category: 5, question: "【長篇情境題 - 拖放排序】當外部驗證稽核結束，且主導稽核員在結束會議上宣布了多項不符合事項 (NC) 後，受稽組織與驗證機構之間將展開一系列的後續追蹤與發證流程。\n\n請將以下標準的『稽核後續行動與結案 (Post-Audit & Closing)』流程依序排列：", items: ["受稽組織針對缺失進行根本原因分析 (Root Cause Analysis)", "受稽組織制定並提交矯正措施計畫 (Corrective Action Plan)", "主導稽核員審查並接受矯正措施計畫的適切性", "受稽組織執行矯正措施，並提供實作證據 (或由稽核員安排跟催稽核)", "驗證機構完成技術審查，確認無未解決的 Major NC，正式核發證書"], answer: [0, 1, 2, 3, 4] }
+            { type: 'order', category: 5, question: "【長篇情境題 - 拖放排序】當外部驗證稽核結束，且主導稽核員在結束會議上宣布了多項不符合事項 (NC) 後，受稽組織與驗證機構之間將展開一系列的後續追蹤與發證流程。\n\n請將以下標準的『稽核後續行動與結案 (Post-Audit & Closing)』流程依序排列：", items: ["受稽組織針對缺失進行根本原因分析 (Root Cause Analysis)", "受稽組織制定並提交矯正措施計畫 (Corrective Action Plan)", "主導稽核員審查並接受矯正措施計畫的適切性", "受稽組織執行矯正措施，並提供實作證據 (或由稽核員安排跟催稽核)", "驗證機構完成技術審查，確認無未解決的 Major NC，正式核發證書"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 5, question: "【長篇情境題】在撰寫稽核報告時，主導稽核員回顧了一項觀察：『組織的內部稽核員在執行年度內部稽核時，審查了自己所屬的 IT 維運部門，並判定所有項目皆完全符合。』主導稽核員決定為此開立不符合事項。\n\n請問，開立此不符合事項的最主要標準依據 (Audit Criteria) 是什麼？", options: ["內部稽核員沒有考取 ISO 27001 主導稽核員證書", "內部稽核過程違反了『客觀性』與『稽核員的獨立性』原則 (不應稽核自己的工作)", "內部稽核報告的字數太少", "內部稽核沒有聘請外部顧問參與"], answer: 1 },
+            { type: 'multiple', category: 5, question: "【長篇情境題 - 多選】針對『主要不符合事項 (Major Nonconformity)』的定義，驗證機構通常在何種情況下會開立 Major NC，並可能導致延遲發證或暫停證書？", options: ["標準要求的某個關鍵條文 (例如管理階層審查、風險評鑑) 發生系統性失效或完全未實施", "發現單一員工將密碼寫在筆記本上 (局部個案)", "現有的控制措施實施情況存在嚴重缺失，對資訊安全造成直接且重大的威脅", "連續多次發生相同的次要不符合事項 (Minor NC) 且未被有效糾正"], answer: [0, 2, 3] },
+            { type: 'order', category: 5, question: "【長篇情境題 - 拖放排序】當受稽組織收到驗證機構開立的不符合事項報告 (NCR) 後，必須執行完整的『矯正措施 (Corrective Action)』流程。為了徹底解決問題，請將下列矯正措施處理步驟依最符合邏輯與標準要求的順序排列：", items: ["採取立即的『導正/應變措施 (Correction)』來控制眼前的損害", "執行『根本原因分析 (Root Cause Analysis)』，找出問題為何會發生的核心原因", "制定『矯正措施計畫 (CAP)』以消除根本原因，防止問題再次發生", "執行矯正措施，並保留相關的文件化證據", "審查所採取矯正措施的『有效性 (Effectiveness)』"], answer: [0, 1, 2, 3, 4] }
         ];
 
         let examQuestions = [];
@@ -397,6 +412,7 @@
                 else if (currentQ.category === 4) score += 3;
                 else if (currentQ.category === 5) score += 2.5;
             }
+            currentQ.userCorrect = isCorrect;
 
             currentQuestionIndex++;
             if (currentQuestionIndex < examQuestions.length) {
@@ -460,6 +476,43 @@
             message += isPass ? `<p class="pass">🎉 恭喜您！您達到了 70% 的及格門檻（${passMark.toFixed(1)}分），通過了 ISO 27001 模擬測驗。</p>` : `<p class="fail">❌ 很遺憾，您未達 70% 的及格標準（${passMark.toFixed(1)}分），請再接再厲。</p>`;
 
             document.getElementById('result-message').innerHTML = message;
+        }
+
+        function showReview() {
+            document.getElementById('result-screen').classList.remove('active');
+            document.getElementById('review-screen').classList.add('active');
+            const container = document.getElementById('review-container');
+            container.innerHTML = '';
+
+            examQuestions.forEach((q, index) => {
+                let item = document.createElement('div');
+                item.className = 'review-item ' + (q.userCorrect ? 'correct' : 'incorrect');
+
+                let title = document.createElement('div');
+                title.className = 'review-question';
+                title.innerText = `第 ${index + 1} 題 [單元 ${q.category}]\n${q.question}`;
+                item.appendChild(title);
+
+                let status = document.createElement('div');
+                status.innerHTML = q.userCorrect ? '<span style="color:#28a745;font-weight:bold;">✅ 答對</span>' : '<span style="color:#d9534f;font-weight:bold;">❌ 答錯</span>';
+                item.appendChild(status);
+
+                let ansBox = document.createElement('div');
+                ansBox.className = 'correct-answer';
+                let ansText = '<strong>正確解答：</strong><br>';
+                if (q.type === 'single') ansText += q.options[q.answer];
+                else if (q.type === 'multiple') ansText += q.answer.map(i => q.options[i]).join('<br>');
+                else if (q.type === 'fill') ansText += q.answer.join('、');
+                else if (q.type === 'match') ansText += q.pairs.map(p => p.left + ' ➔ ' + p.right).join('<br>');
+                else if (q.type === 'order') ansText += q.answer.map((origIdx, i) => (i+1) + '. ' + q.items[origIdx]).join('<br>');
+                ansBox.innerHTML = ansText;
+                item.appendChild(ansBox);
+                container.appendChild(item);
+            });
+        }
+        function hideReview() {
+            document.getElementById('review-screen').classList.remove('active');
+            document.getElementById('result-screen').classList.add('active');
         }
     </script>
 </body>
