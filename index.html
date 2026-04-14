@@ -66,7 +66,10 @@
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="screen">
             <div class="header-info">
-                <div id="question-tracker">題號: 1 / 40</div>
+                <div>
+                    <div id="category-tracker" style="font-size: 18px; color: #0056b3; margin-bottom: 5px;">單元載入中...</div>
+                    <div id="question-tracker">題號: 1 / 40</div>
+                </div>
                 <div style="display: flex; align-items: center;">
                     <div id="timer" class="timer">剩餘時間: 1小時:45分鐘:00秒</div>
                     <button id="break-btn" class="break-btn">休息一下</button>
@@ -147,6 +150,19 @@
             { type: 'multiple', category: 5, question: "【長篇情境題 - 多選】針對『主要不符合事項 (Major Nonconformity)』的定義，驗證機構通常在何種情況下會開立 Major NC，並可能導致延遲發證或暫停證書？", options: ["標準要求的某個關鍵條文 (例如管理階層審查、風險評鑑) 發生系統性失效或完全未實施", "發現單一員工將密碼寫在筆記本上 (局部個案)", "現有的控制措施實施情況存在嚴重缺失，對資訊安全造成直接且重大的威脅", "連續多次發生相同的次要不符合事項 (Minor NC) 且未被有效糾正"], answer: [0, 2, 3] },
             { type: 'order', category: 5, question: "【長篇情境題 - 拖放排序】當受稽組織收到驗證機構開立的不符合事項報告 (NCR) 後，必須執行完整的『矯正措施 (Corrective Action)』流程。為了徹底解決問題，請將下列矯正措施處理步驟依最符合邏輯與標準要求的順序排列：", items: ["採取立即的『導正/應變措施 (Correction)』來控制眼前的損害", "執行『根本原因分析 (Root Cause Analysis)』，找出問題為何會發生的核心原因", "制定『矯正措施計畫 (CAP)』以消除根本原因，防止問題再次發生", "執行矯正措施，並保留相關的文件化證據", "審查所採取矯正措施的『有效性 (Effectiveness)』"], answer: [0, 1, 2, 3, 4] }
         ];
+
+        // 自動擴充題庫至每個單元 50 題 (共 250 題)
+        // 備註：此腳本為動態補足缺少的佔位題目。若您未來有了真實的 50 題，可以直接覆蓋上方的 questionBank 陣列，並將這段迴圈刪除。
+        for (let c = 1; c <= 5; c++) {
+            let currentCount = questionBank.filter(q => q.category === c).length;
+            for (let i = currentCount + 1; i <= 50; i++) {
+                questionBank.push({
+                    type: 'single', category: c,
+                    question: `【擴充測試題】這是單元 ${c} 的隨機抽測題目。\n(請注意，這是系統為滿足「每單元50題」自動生成的佔位題目，您可以自行在程式碼中替換為真實考題。)`,
+                    options: ["選項 A", "選項 B (正確解答)", "選項 C", "選項 D"], answer: 1
+                });
+            }
+        }
 
         let examQuestions = [];
         let currentQuestionIndex = 0;
@@ -277,6 +293,9 @@
         function loadQuestion() {
             nextBtn.disabled = true;
             const currentQuestion = examQuestions[currentQuestionIndex];
+            
+            const categoryNames = ["", "單元一：管理系統概念", "單元二：稽核概念與責任", "單元三：稽核規劃", "單元四：稽核執行", "單元五：稽核報告與結束"];
+            document.getElementById('category-tracker').innerText = `目前測驗單元: ${categoryNames[currentQuestion.category]}`;
             tracker.innerText = `題號: ${currentQuestionIndex + 1} / ${examQuestions.length}`;
             
             optionsContainer.innerHTML = '';
