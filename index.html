@@ -98,71 +98,115 @@
     </div>
 
     <script>
-        // ISO 27001 綜合互動題庫 (25題示範：涵蓋5大類組 × 5種題型)
         const questionBank = [
-            // --- 單元 1: 管理系統概念 ---
-            { type: 'single', category: 1, question: "High Level Structure (HLS) 的主要目的是什麼？", options: ["為了增加驗證機構的收入", "使不同的 ISO 管理系統標準（如 ISO 27001, ISO 9001）具有一致的架構與核心文字，易於整合", "為了讓標準更難閱讀", "專門針對資訊安全設計的加密演算法"], answer: 1 },
-            { type: 'multiple', category: 1, question: "【多選】資訊安全管理系統 (ISMS) 的三大核心屬性（CIA）包含下列哪些？", options: ["機密性 (Confidentiality)", "複雜性 (Complexity)", "完整性 (Integrity)", "可用性 (Availability)"], answer: [0, 2, 3] },
-            { type: 'fill', category: 1, question: "請將正確的詞彙拖放至空格中：\nISMS 採用了 PDCA 循環，其中 P 代表 _ ， D 代表 _ ， C 代表 _ ， A 代表 _ 。", words: ["計畫 (Plan)", "執行 (Do)", "查核 (Check)", "行動 (Act)", "預防 (Prevent)"], answer: ["計畫 (Plan)", "執行 (Do)", "查核 (Check)", "行動 (Act)"] },
-            { type: 'match', category: 1, question: "將下列名詞與其對應的定義進行匹配：", pairs: [{ left: "資訊安全", right: "保護資訊的機密性、完整性與可用性" }, { left: "風險", right: "不確定性對目標的影響" }, { left: "不符合事項", right: "未滿足某項要求" }] },
-            { type: 'order', category: 1, question: "請依據 ISO 高階架構 (HLS)，將下列標準條文 (Clause 4~7) 依序排列：", items: ["了解組織及其前後環境 (Clause 4)", "領導力 (Clause 5)", "規劃 (Clause 6)", "支援 (Clause 7)"], answer: [0, 1, 2, 3] },
-            { type: 'single', category: 1, question: "在建立資訊安全管理系統 (ISMS) 時，『了解組織及其前後環境 (Context of the organization)』的主要目的是什麼？", options: ["為了應付外部稽核員的檢查清單", "識別可能影響 ISMS 達成其預期結果之內部與外部議題", "蒐集員工的個人隱私資料", "決定 IT 部門的年度預算上限"], answer: 1 },
+            // ================= 單元 1: 管理系統概念 (18題) =================
+            { type: 'single', category: 1, question: "High Level Structure (HLS) 的主要目的是什麼？", options: ["增加驗證機構的收入", "使不同的 ISO 管理系統標準具有一致的架構與核心文字", "讓標準更難閱讀", "專門針對資訊安全設計的加密演算法"], answer: 1 },
+            { type: 'multiple', category: 1, question: "【多選】資訊安全管理系統 (ISMS) 的三大核心屬性（CIA）包含？", options: ["機密性 (Confidentiality)", "複雜性 (Complexity)", "完整性 (Integrity)", "可用性 (Availability)"], answer: [0, 2, 3] },
+            { type: 'fill', category: 1, question: "拖放填空：\nISMS 採用 PDCA 循環，P 代表 _ ， D 代表 _ ， C 代表 _ ， A 代表 _ 。", words: ["計畫 (Plan)", "執行 (Do)", "查核 (Check)", "行動 (Act)"], answer: ["計畫 (Plan)", "執行 (Do)", "查核 (Check)", "行動 (Act)"] },
+            { type: 'match', category: 1, question: "名詞與定義匹配：", pairs: [{ left: "資訊安全", right: "保護資訊的機密性、完整性與可用性" }, { left: "風險", right: "不確定性對目標的影響" }, { left: "不符合事項", right: "未滿足某項要求" }] },
+            { type: 'order', category: 1, question: "依據 ISO 高階架構，請將標準條文 (Clause 4~7) 排序：", items: ["了解組織及其前後環境", "領導力", "規劃", "支援"], answer: [0, 1, 2, 3] },
+            { type: 'single', category: 1, question: "建立 ISMS 時，『了解組織及其前後環境』的主要目的是？", options: ["應付稽核員", "識別可能影響 ISMS 預期結果之內外部議題", "蒐集員工隱私", "決定 IT 預算上限"], answer: 1 },
+            { type: 'single', category: 1, question: "何者是最高階管理層 (Top Management) 的責任？", options: ["確保 ISMS 政策與目標已建立，並與組織策略方向一致", "親自撰寫程序書", "執行所有內部稽核", "管理防火牆"], answer: 0 },
+            { type: 'multiple', category: 1, question: "【多選】資訊安全風險評鑑應包含哪些步驟？", options: ["風險識別", "風險分析", "風險消除", "風險評估"], answer: [0, 1, 3] },
+            { type: 'fill', category: 1, question: "資訊安全目標必須是 _ 的、被 _ 的，並在適當時予以 _。", words: ["可量測", "溝通", "更新"], answer: ["可量測", "溝通", "更新"] },
+            { type: 'single', category: 1, question: "風險處理計畫 (Risk Treatment Plan) 的制定必須考量什麼？", options: ["僅考量成本", "風險評鑑結果與適用的控制措施", "員工喜好", "供應商建議"], answer: 1 },
+            { type: 'match', category: 1, question: "風險處理選項匹配：", pairs: [{ left: "風險規避 (Avoid)", right: "停止進行產生風險的活動" }, { left: "風險轉移 (Share)", right: "透過保險或外包將風險轉移給第三方" }, { left: "風險降低 (Mitigate)", right: "實施控制措施以降低風險發生的機率或衝擊" }] },
+            { type: 'order', category: 1, question: "風險管理流程排序：", items: ["建立前後環境", "風險評鑑 (識別、分析、評估)", "風險處理", "風險接受"], answer: [0, 1, 2, 3] },
+            { type: 'single', category: 1, question: "適用性聲明書 (SoA) 必須包含什麼？", options: ["只有適用的控制", "只有不適用的控制", "必要控制措施、納入原因、是否實作、排除理由", "全體員工薪資"], answer: 2 },
+            { type: 'multiple', category: 1, question: "【多選】決定 ISMS 範圍時需考慮哪些因素？", options: ["內外部議題", "利害關係者的要求", "組織間的介面與相依性", "競爭對手的財報"], answer: [0, 1, 2] },
+            { type: 'fill', category: 1, question: "管理階層審查的目的是確保 ISMS 的持續 _ 、 _ 與 _ 。", words: ["合適性", "適切性", "有效性"], answer: ["合適性", "適切性", "有效性"] },
+            { type: 'single', category: 1, question: "下列何者不屬於資訊資產？", options: ["硬體設備", "無形的商譽", "員工的專業知識", "辦公室外的公車站牌"], answer: 3 },
+            { type: 'match', category: 1, question: "條文 7 支援 (Support) 匹配：", pairs: [{ left: "7.1 資源", right: "決定並提供建立、實施 ISMS 所需的資源" }, { left: "7.2 能力", right: "確保人員具備適當的教育、訓練或經驗" }, { left: "7.3 認知", right: "確保人員了解資訊安全政策及其貢獻" }] },
+            { type: 'order', category: 1, question: "持續改善 (Continual Improvement) 步驟：", items: ["識別不符合事項或改善機會", "進行根本原因分析", "實施矯正措施", "審查矯正措施的有效性"], answer: [0, 1, 2, 3] },
 
-            // --- 單元 2: 稽核概念與責任 ---
-            { type: 'single', category: 2, question: "「稽核證據 (Audit Evidence)」的定義是什麼？", options: ["稽核員的主觀猜測", "與稽核準則相關且可查證之紀錄、事實陳述或其他資訊", "受稽部門主管的口頭保證（無其他佐證）", "競爭對手的商業機密"], answer: 1 },
-            { type: 'multiple', category: 2, question: "【多選】依據 ISO 19011，稽核員應具備的原則包含哪些？", options: ["誠正 (Integrity)", "偏見與主觀判斷", "保密性 (Confidentiality)", "獨立性 (Independence)"], answer: [0, 2, 3] },
-            { type: 'fill', category: 2, question: "請將正確的詞彙拖放至空格中：\n內部稽核又稱為 _ 稽核；而驗證機構來進行的稽核屬於 _ 稽核。", words: ["第一方", "第二方", "第三方", "第四方"], answer: ["第一方", "第三方"] },
-            { type: 'match', category: 2, question: "將下列稽核角色與其職責進行匹配：", pairs: [{ left: "主導稽核員", right: "負責管理整個稽核團隊與稽核計畫" }, { left: "嚮導 (Guide)", right: "協助稽核團隊，但不參與稽核過程" }, { left: "觀察員 (Observer)", right: "陪同稽核團隊，但不干預或影響稽核" }] },
-            { type: 'order', category: 2, question: "請將「一般稽核生命週期」的五大階段依序排列：", items: ["起始稽核 (Initiating)", "準備稽核活動 (Preparing)", "執行稽核活動 (Conducting)", "準備與發布稽核報告 (Reporting)", "完成稽核 (Closing)"], answer: [0, 1, 2, 3, 4] },
-            { type: 'multiple', category: 2, question: "【多選】依據 ISO 19011，執行內部或外部稽核時，稽核員必須嚴格遵守的『稽核原則』包含下列哪些？", options: ["客觀性與獨立性 (Independence)", "基於證據的方法 (Evidence-based approach)", "主觀偏見 (Subjectivity)", "合理照料 (Due professional care)"], answer: [0, 1, 3] },
+            // ================= 單元 2: 稽核概念與責任 (18題) =================
+            { type: 'single', category: 2, question: "「稽核證據」的定義是什麼？", options: ["稽核員主觀猜測", "與稽核準則相關且可查證之紀錄、事實陳述或其他資訊", "口頭保證", "商業機密"], answer: 1 },
+            { type: 'multiple', category: 2, question: "【多選】依據 ISO 19011，稽核員應具備的原則包含？", options: ["誠正 (Integrity)", "保密性 (Confidentiality)", "獨立性 (Independence)", "主觀偏見"], answer: [0, 1, 2] },
+            { type: 'fill', category: 2, question: "內部稽核又稱為 _ 稽核；驗證機構進行的屬於 _ 稽核。", words: ["第一方", "第三方"], answer: ["第一方", "第三方"] },
+            { type: 'match', category: 2, question: "稽核角色匹配：", pairs: [{ left: "主導稽核員", right: "負責管理整個稽核團隊與稽核計畫" }, { left: "嚮導 (Guide)", right: "協助稽核團隊，但不參與稽核過程" }, { left: "觀察員", right: "陪同稽核團隊，但不干預或影響稽核" }] },
+            { type: 'order', category: 2, question: "稽核生命週期 5 階段排序：", items: ["起始稽核", "準備稽核活動", "執行稽核活動", "準備與發布稽核報告", "完成稽核"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 2, question: "什麼是「專業應有之注意 (Due professional care)」？", options: ["不收費", "在稽核過程中應用勤勉與判斷，重視任務的重要性", "隨便看看", "幫客戶寫報告"], answer: 1 },
+            { type: 'multiple', category: 2, question: "【多選】稽核範圍 (Scope) 通常包含哪些界線？", options: ["實體位置", "組織單位", "活動與流程", "外部供應商的所有全球據點"], answer: [0, 1, 2] },
+            { type: 'fill', category: 2, question: "將收集到的 _ 與 _ 進行比較，即可得出 _ 。", words: ["稽核證據", "稽核準則", "稽核發現"], answer: ["稽核證據", "稽核準則", "稽核發現"] },
+            { type: 'single', category: 2, question: "內部稽核的「獨立性」意味著什麼？", options: ["稽核員必須是外部人員", "稽核員不應稽核自己負責的工作", "稽核員不用向主管報告", "稽核員不能和受稽者講話"], answer: 1 },
+            { type: 'match', category: 2, question: "稽核類型匹配：", pairs: [{ left: "第一方稽核", right: "組織對自身進行的內部稽核" }, { left: "第二方稽核", right: "客戶對其供應商進行的稽核" }, { left: "第三方稽核", right: "獨立驗證機構進行的認證稽核" }] },
+            { type: 'order', category: 2, question: "內部稽核 (Clause 9.2) 執行步驟：", items: ["規劃內部稽核計畫", "選擇具客觀性的稽核員", "執行稽核並收集證據", "向管理階層報告結果", "保留文件化資訊作為證據"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 2, question: "稽核員在稽核過程中取得敏感資訊，應遵守什麼原則？", options: ["公開透明", "保密性 (Confidentiality)", "賣給媒體", "告訴其他部門"], answer: 1 },
+            { type: 'multiple', category: 2, question: "【多選】稽核計畫 (Audit Plan) 應包含哪些基本資訊？", options: ["稽核目標", "稽核範圍", "稽核日期與地點", "所有員工的身分證字號"], answer: [0, 1, 2] },
+            { type: 'fill', category: 2, question: "稽核團隊的 _ 負責編製稽核計畫，並應與 _ 進行確認。", words: ["主導稽核員", "受稽者 (Auditee)"], answer: ["主導稽核員", "受稽者 (Auditee)"] },
+            { type: 'single', category: 2, question: "「稽核準則 (Audit Criteria)」不包含下列何者？", options: ["ISO 27001 標準條文", "組織內部的資安政策與程序", "適用的法律法規", "稽核員個人的喜好"], answer: 3 },
+            { type: 'match', category: 2, question: "ISO 19011 原則匹配：", pairs: [{ left: "誠正 (Integrity)", right: "稽核專業的基礎，誠實盡責" }, { left: "公平表達", right: "真實且準確地報告稽核活動的義務" }, { left: "客觀性", right: "確保稽核發現與結論僅基於稽核證據" }] },
+            { type: 'order', category: 2, question: "準備稽核活動的順序：", items: ["審查文件化資訊", "決定稽核範圍與目標", "編製稽核計畫", "指派稽核團隊工作"], answer: [1, 0, 2, 3] },
+            { type: 'single', category: 2, question: "稽核員若發現受稽者的流程合規，但可進一步優化，應如何記錄？", options: ["主要缺失", "次要缺失", "改進機會 (OFI)", "直接忽略"], answer: 2 },
 
-            // --- 單元 3: 稽核規劃 ---
-            { type: 'single', category: 3, question: "在第三方認證中，「階段一稽核 (Stage 1 Audit)」的主要目的是什麼？", options: ["發放 ISO 27001 證書", "審查客戶的文件化資訊，並評估其是否準備好進入階段二現場稽核", "盤點客戶的所有電腦設備", "對員工進行資安考試"], answer: 1 },
-            { type: 'multiple', category: 3, question: "【多選】「稽核計畫 (Audit Plan)」中通常必須包含哪些資訊？", options: ["稽核目標", "稽核範圍", "所有受稽人員的薪資", "預計的稽核日期與時間表"], answer: [0, 1, 3] },
-            { type: 'fill', category: 3, question: "請將正確的詞彙拖放至空格中：\n稽核計畫應由 _ 負責編製，並與 _ 進行溝通及確認。", words: ["主導稽核員", "受稽者 (Auditee)", "外部顧問", "驗證機構總經理"], answer: ["主導稽核員", "受稽者 (Auditee)"] },
-            { type: 'match', category: 3, question: "將稽核規劃的相關名詞進行匹配：", pairs: [{ left: "稽核範圍 (Audit Scope)", right: "稽核的界線與界限，包含實體位置、組織單位等" }, { left: "稽核準則 (Audit Criteria)", right: "用以比較客觀證據的要求集合 (如政策、程序、ISO標準)" }, { left: "稽核發現 (Audit Findings)", right: "收集到的稽核證據對抗稽核準則所評估的結果" }] },
-            { type: 'order', category: 3, question: "在規劃與準備稽核時，請將下列步驟依序排列：", items: ["審查文件化資訊", "決定稽核範圍與目標", "編製稽核計畫 (Audit Plan)", "指派稽核團隊的工作"], answer: [1, 0, 2, 3] },
-            { type: 'single', category: 3, question: "關於『階段一稽核 (Stage 1 Audit)』的執行重點，下列敘述何者最為正確？", options: ["直接前往機房檢查防火牆設定", "主要是審查客戶的文件化資訊，並評估組織對階段二現場稽核的準備情況", "開立所有的不符合事項報告 (NCR) 並發放證書", "要求組織當場解僱不遵守規定的員工"], answer: 1 },
+            // ================= 單元 3: 稽核規劃 (18題) =================
+            { type: 'single', category: 3, question: "在第三方認證中，「階段一稽核 (Stage 1)」的主要目的是？", options: ["發放證書", "審查文件化資訊並評估階段二的準備情況", "盤點電腦", "解雇員工"], answer: 1 },
+            { type: 'multiple', category: 3, question: "【多選】稽核員收集客觀證據的方法包含？", options: ["訪談人員", "觀察流程與環境", "審查文件與紀錄", "主觀猜測"], answer: [0, 1, 2] },
+            { type: 'fill', category: 3, question: "稽核查檢表 (Checklist) 作為稽核員的 _ 工具，能幫助維持稽核 _ ，但不可限制稽核員的 _ 追查。", words: ["備忘", "節奏與範圍", "彈性"], answer: ["備忘", "節奏與範圍", "彈性"] },
+            { type: 'match', category: 3, question: "溝通對象與目的匹配：", pairs: [{ left: "起始會議 (Opening)", right: "確認稽核計畫、範圍與溝通管道" }, { left: "每日總結會議", right: "向受稽者回報當日發現與進度" }, { left: "結束會議 (Closing)", right: "正式提出稽核發現與結論" }] },
+            { type: 'order', category: 3, question: "Stage 1 到 Stage 2 流程排序：", items: ["執行 Stage 1 文件審查", "產出 Stage 1 報告並指出關注事項", "組織針對關注事項進行改善", "執行 Stage 2 現場稽核以驗證實施有效性"], answer: [0, 1, 2, 3] },
+            { type: 'single', category: 3, question: "「階段二稽核 (Stage 2 Audit)」的核心目的是什麼？", options: ["檢查錯字", "評估管理系統的實際實施情況與有效性", "協助寫風險報告", "決定稽核範圍"], answer: 1 },
+            { type: 'multiple', category: 3, question: "【多選】Stage 1 稽核通常會審查哪些關鍵文件？", options: ["資訊安全政策", "適用性聲明書 (SoA)", "風險評鑑與處理方法", "員工私人通訊紀錄"], answer: [0, 1, 2] },
+            { type: 'fill', category: 3, question: "由於稽核通常在有限時間內執行，無法檢查所有項目，因此存在 _ 風險，這點必須在 _ 會議中向受稽者說明。", words: ["抽樣 (Sampling)", "起始 (Opening)"], answer: ["抽樣 (Sampling)", "起始 (Opening)"] },
+            { type: 'single', category: 3, question: "決定稽核是否具備「可行性 (Feasibility)」時，不需考量？", options: ["受稽者是否提供充分合作", "是否有足夠的時間與資源", "稽核員的機票價格", "受稽者是否有足夠的資訊與紀錄供審查"], answer: 2 },
+            { type: 'match', category: 3, question: "稽核規劃名詞匹配：", pairs: [{ left: "稽核目標", right: "決定為何要進行這次稽核 (如：驗證符合性)" }, { left: "稽核範圍", right: "界定稽核要查哪裡 (部門、實體位置)" }, { left: "稽核計畫", right: "詳細列出幾點幾分要查哪個部門的排程表" }] },
+            { type: 'order', category: 3, question: "文件審查流程：", items: ["收集受稽組織的文件", "與 ISO 27001 條文要求進行比對", "記錄文件中的不足或疑點", "將疑點列入現場稽核查檢表以進一步驗證"], answer: [0, 1, 2, 3] },
+            { type: 'single', category: 3, question: "若在 Stage 1 發現組織完全沒有進行內部稽核與管理階層審查，主導稽核員應？", options: ["直接發放證書", "強烈建議延後 Stage 2 稽核，直到組織補齊這些強制要求", "自己幫忙做內部稽核", "忽略它"], answer: 1 },
+            { type: 'multiple', category: 3, question: "【多選】關於稽核抽樣，下列何者正確？", options: ["可採用隨機抽樣", "可依據風險高低進行判斷式抽樣", "抽樣結果具備 100% 的絕對保證", "抽樣數量應依據母體大小與風險決定"], answer: [0, 1, 3] },
+            { type: 'fill', category: 3, question: "稽核團隊在現場若發現重大安全漏洞，導致稽核無法繼續進行，主導稽核員應立即 _ 並向 _ 報告。", words: ["中斷稽核", "稽核客戶與受稽者"], answer: ["中斷稽核", "稽核客戶與受稽者"] },
+            { type: 'single', category: 3, question: "若受稽組織要求更改已經確認的稽核範圍，主導稽核員應？", options: ["立刻口頭同意", "與驗證機構及受稽者重新評估並正式修改合約與計畫", "生氣並取消稽核", "只查原本的範圍，拒絕聽取理由"], answer: 1 },
+            { type: 'match', category: 3, question: "起始會議議程匹配：", pairs: [{ left: "介紹階段", right: "介紹稽核團隊成員與角色" }, { left: "確認階段", right: "確認稽核範圍、準則與排程" }, { left: "說明階段", right: "說明抽樣風險與缺失等級定義" }] },
+            { type: 'order', category: 3, question: "指派稽核團隊工作的邏輯：", items: ["分析稽核範圍的技術專業需求", "盤點現有稽核員的專長與能力", "將特定流程分配給具備對應能力的稽核員", "向團隊成員進行任務簡報 (Briefing)"], answer: [0, 1, 2, 3] },
+            { type: 'single', category: 3, question: "外部專家 (Technical Expert) 在稽核團隊中的角色是？", options: ["主導整個稽核", "提供特定技術領域的專業知識，但不單獨擔任稽核員", "負責請客", "負責撰寫最終報告"], answer: 1 },
 
-            // --- 單元 4: 稽核執行 ---
-            { type: 'single', category: 4, question: "【長篇情境題】在對某電子商務公司進行 ISO 27001 第三方稽核時，主導稽核員正在檢視『供應商關係的資訊安全』(A.15)。IT 經理表示：『我們已經將所有的核心客戶資料庫與網站代管服務，全部轉移到全球知名的頂級雲端服務供應商 (CSP)。因為他們本身已經通過了 ISO 27001 與 SOC 2 認證，所以我們公司內部不需要再針對這些託管資料制定任何備份計畫、不需要進行復原測試，也不需要去審查他們的安全報告。他們的合約就是最好的安全保證。』當稽核員要求查看雙方的服務級別協議 (SLA) 以及組織如何監控該 CSP 的資安績效紀錄時，IT 經理無法提供任何文件，並再次強調『這不是我們的責任』。\n\n針對此情境，作為稽核員，您最正確的下一步或判斷為何？", options: ["同意 IT 經理的說法，因為頂級 CSP 的認證已足夠涵蓋組織的風險", "要求 IT 經理立刻打電話給 CSP 要求提供備份還原測試報告", "判定組織未對供應商的安全交付進行監控與審查，且未依自身營運持續需求規劃雲端服務要求", "直接終止稽核，因為組織將核心業務外包違反了 ISO 27001 規定"], answer: 2 },
-            { type: 'multiple', category: 4, question: "【長篇情境題 - 多選】稽核員正在查核某製造廠的『實體與環境安全』(Clause 8 / A.7)。稽核員在廠區主管的陪同下進入了被劃定為『安全區域』的伺服器機房。稽核員觀察到以下幾個現象：\n1. 機房大門使用的是一般喇叭鎖，且為了讓剛洗完的地板通風，大門正被一個紙箱擋住保持敞開。\n2. 機房內有一位穿著外部制服的冷氣維修人員正在工作，但現場除了稽核員與陪同主管外，並沒有其他內部 IT 人員在場監督。\n3. 機房桌上放了一本『訪客登記簿』，但該名維修人員並未填寫任何進出紀錄。\n4. 當稽核員詢問陪同主管這是否符合規定時，主管回答：『他每個月都來保養，大家都認識他了，不需要這麼麻煩。』\n\n依據上述情境，組織違反了哪些 ISO 27001 的控制措施或原則？", options: ["實體安全邊界與安全區域的保護不足", "訪客與外部人員的實體存取控制失效", "違反了加密控制措施 (Cryptographic controls)", "未落實資訊安全事件通報程序"], answer: [0, 1] },
-            { type: 'fill', category: 4, question: "【長篇情境題 - 拖放填空】在訪談資安風險經理時，稽核員檢視了最新的《年度資訊安全風險評鑑報告》。報告中指出，某項核心 ERP 系統存在『未修補的已知重大軟體漏洞』，導致遭遇勒索軟體攻擊的機率極高，風險等級被評為『不可接受之重大風險』。\n\n然而，當稽核員要求查看該風險的後續處置狀況時，風險經理表示：『因為修補該漏洞需要停機 48 小時，業務部門強烈反對，所以我們決定什麼都不做，直接承擔這個風險。』但該決定並未獲得 _ 的簽署與正式核准。此外，組織也未將此決策更新至 _ 之中，導致現有的文件無法真實反映組織的風險處理現況與控制措施的適用性。", words: ["風險擁有者 (Risk Owner)", "適用性聲明書 (SoA)", "內部稽核員", "資訊安全政策"], answer: ["風險擁有者 (Risk Owner)", "適用性聲明書 (SoA)"] },
-            { type: 'match', category: 4, question: "【長篇情境題 - 匹配】稽核團隊在執行了為期三天的現場稽核後，收集到了多項稽核證據。請依據以下複雜的查核情境，將其正確匹配至最合適的稽核發現分類：", pairs: [{ left: "查核 50 台員工電腦，發現有 3 台的防毒軟體病毒碼超過兩個月未更新，其餘 47 台皆正常且由派發伺服器統一控管。", right: "次要不符合事項 (Minor NC)" }, { left: "組織完全沒有定義風險評估的準則（如風險接受與評估準則），也沒有產出任何風險評鑑報告，導致 ISMS 缺乏風險管理基礎。", right: "主要不符合事項 (Major NC)" }, { left: "員工離職流程都有確實填寫並停用帳號，但在『資產交接』的表單上，目前的紙本作業常有遺漏簽名的風險，若能導入電子簽核系統將能有效降低失誤率。", right: "建議事項 (OFI)" }] },
-            { type: 'order', category: 4, question: "【長篇情境題 - 拖放排序】某金融機構在週五下午 3 點發生了嚴重的資料外洩事件，客服部門接獲大量客戶投訴表示信用卡遭盜刷。IT 部門初步調查發現，是外部駭客利用釣魚郵件取得了內部員工的高權限帳號，進而存取了客戶資料庫。\n\n依據 ISO 27001 的『資訊安全事件管理』要求以及標準的事故應變生命週期，請協助該機構的事故應變小組 (IR Team) 將下列處理步驟依據正確的時間先後順序進行排列：", items: ["識別與通報：員工或監控系統發現異常，並通報給資安窗口", "分類與評估：評估嚴重程度並確認是否升級為資訊安全事件", "遏制與根除：中斷被駭帳號連線，隔離受感染系統防止損害擴大", "復原：從備份中還原資料，確認無潛在威脅後逐步恢復服務上線", "事後檢討與學習：召開檢討會議，分析根本原因並更新控制措施"], answer: [0, 1, 2, 3, 4] },
-            { type: 'single', category: 4, question: "【長篇情境題】稽核員正在查核某軟體開發公司的『存取控制』(A.9)。稽核員發現，為了方便外部合作廠商進行系統維護，IT 部門開通了一個名為『vendor_admin』的 VPN 帳號，並將密碼統一設定為『Company@2023』。訪談中，IT 人員表示：『目前有三家不同的供應商、共約 10 位工程師共用這個帳號登入我們的核心伺服器，因為他們都是簽過保密協定的信任夥伴。』\n\n針對此情境，稽核員最主要的資安疑慮是什麼？", options: ["密碼長度不足，不符合複雜度要求", "共用帳號無法實現『可歸責性 (Accountability)』，發生資安事件時無法追溯是哪位特定人員的操作", "供應商太多家，會導致 VPN 頻寬不足", "應該請供應商自己架設 VPN 伺服器"], answer: 1 },
-            { type: 'multiple', category: 4, question: "【長篇情境題 - 多選】稽核員正在審查組織的『密碼與通行碼管理程序』。政策明確規定：『所有員工的開機密碼必須至少 12 碼，且每 90 天強制更換一次。』然而，當稽核員請系統管理員開啟 Active Directory (AD) 伺服器的設定畫面時，發現密碼長度被設定為『最少 8 碼』，且『密碼最長使用期限』被設定為『0 (密碼永不過期)』。\n管理員解釋：『政策是去年底才改的，但因為有很多老員工抱怨一直換密碼很麻煩，所以我們 IT 內部決定先不套用這些強制設定，等明年再說。』\n\n此情境反映了哪些 ISMS 的缺失？", options: ["文件化政策與實際技術控制措施脫鉤 (未落實)", "未經授權或正式變更管理程序，IT 人員私自豁免了安全控制", "密碼長度設定為 8 碼會導致系統直接當機", "缺乏對控制措施有效性的監督與審查"], answer: [0, 1, 3] },
-            { type: 'fill', category: 4, question: "【長篇情境題 - 拖放填空】在遠距辦公 (Teleworking) 的查核中，稽核員發現員工可以將含有機密客戶名單的報表下載到自己的私人筆記型電腦中，且該私人電腦並未安裝公司的端點防護軟體 (EDR)，也未進行硬碟加密。\n\n這顯示組織在附錄 A 的 _ 控制措施上存在嚴重漏洞。為了解決這個問題，組織應該實施 _ 解決方案，以防止敏感資料在未經授權的個人設備上被存取或外流。", words: ["遠距工作安全", "資料外洩防護 (DLP)", "實體環境保護", "時鐘同步"], answer: ["遠距工作安全", "資料外洩防護 (DLP)"] },
-            { type: 'match', category: 4, question: "【長篇情境題 - 匹配】稽核員在檢視系統維運紀錄時，發現了多個潛在的異常情況。請將這些觀察到的『情境事實』匹配到對應的『控制措施失效』：", pairs: [{ left: "機房的溫度感測器壞了三個月，無人發現也未維修", right: "支援性基礎設施 (Supporting utilities)" }, { left: "離職員工的帳號在離職兩週後仍有成功登入 ERP 系統的紀錄", right: "存取權限的移除或調整" }, { left: "員工可以隨意將公司電腦上的防毒軟體解除安裝", right: "惡意軟體防護 (Protection against malware)" }] },
-            { type: 'order', category: 4, question: "【長篇情境題 - 拖放排序】某醫療機構決定將其內部的『病歷管理系統』進行重大版本更新。依據『系統取得、開發與維護』的規範，請將下列安全的系統開發生命週期 (Secure SDLC) 步驟，依正確的時間順序排列：", items: ["需求分析階段：將資訊安全與個資保護需求納入系統規格", "設計階段：進行系統架構的安全設計與威脅建模", "開發階段：遵循安全編碼指南撰寫程式碼", "測試階段：執行弱點掃描、滲透測試與安全性驗證", "上線與維運：實施變更管理審查後正式上線，並持續監控"], answer: [0, 1, 2, 3, 4] },
-            { type: 'single', category: 4, question: "【長篇情境題】稽核員在查核『資訊安全事件管理』時，詢問一名基層客服人員：『如果你在工作電腦上發現彈出勒索軟體的勒索畫面，你會怎麼做？』客服人員回答：『我會立刻把電腦重新開機，如果還是不行，我就會自己上網找破解軟體試試看，不想因為這樣被主管罵。』\n\n這段對話最能顯示組織在哪一個方面有明顯的缺失？", options: ["防毒軟體的防護能力太弱", "缺乏對員工的資訊安全認知教育，且未落實資安事件通報程序的宣導", "客服人員的電腦硬體太舊", "沒有實施多重要素驗證 (MFA)"], answer: 1 },
-            { type: 'multiple', category: 4, question: "【長篇情境題 - 多選】稽核員檢視組織的備份管理作業。IT 指南規定『每天進行增量備份，每週進行完整備份，且每半年需執行一次災難復原演練』。稽核員查閱紀錄發現，日常備份皆有成功執行的系統 Log，但在要求查看最近一次的『復原演練報告』時，IT 主管表示：『因為我們的儲存設備容量不夠，沒地方做測試還原，所以這三年來我們從來沒有實際測試過還原檔案。』\n\n此情形會引發哪些主要風險或缺失？", options: ["違反了定期測試並驗證備份資訊可復原性的要求", "當真實災難發生時，可能面臨備份資料損壞而無法還原的巨大風險", "會導致備份軟體授權過期", "營運持續計畫 (BCP) 的有效性無法得到保證"], answer: [0, 1, 3] },
-            { type: 'fill', category: 4, question: "【長篇情境題 - 拖放填空】在審查『密碼學控制措施』(A.8.24) 時，稽核員發現公司對外提供的電子商務網站仍在使用 HTTP 明文傳輸，且客戶密碼在資料庫中是以 MD5 進行雜湊 (無加鹽)。\n\n稽核員指出，這未能有效保護傳輸中的 _ ，且 MD5 早已被證實是不安全的演算法，組織應改用更強的演算法（如 AES-256 或 bcrypt）並妥善保護 _ 的生命週期，以確保加密機制的有效性。", words: ["機密性與完整性", "金鑰 (Keys)", "可用性", "防火牆硬體"], answer: ["機密性與完整性", "金鑰 (Keys)"] },
-            { type: 'match', category: 4, question: "【長篇情境題 - 匹配】在查核『營運持續 (Business Continuity)』時，稽核員發現組織的文件中充斥著各種專有名詞。請將下列營運持續的核心指標縮寫，匹配至其正確的定義：", pairs: [{ left: "RTO (復原時間目標)", right: "災難發生後，業務流程或 IT 系統必須恢復運作的時間限制" }, { left: "RPO (復原點目標)", right: "災難發生時，組織可容忍的最大資料遺失量 (時間點)" }, { left: "MTPD (最大可容忍中斷時間)", right: "服務中斷達到此時間後，將對組織造成無法挽回的致命衝擊" }] },
+            // ================= 單元 4: 稽核執行 (28題 - 情境導向) =================
+            { type: 'single', category: 4, question: "【情境】在對某公司進行稽核時，IT 經理表示：『我們已將資料轉移到頂級雲端供應商 (CSP)。因其已有 ISO 27001 認證，我們內部不需針對這些資料制定備份或復原測試，合約就是保證。』經理無法提供 SLA 或監控紀錄。稽核員應？", options: ["同意，CSP 認證已足夠", "要求經理立刻打給 CSP", "判定未對供應商服務進行監控審查，違反 A.15 供應商關係要求", "直接終止稽核"], answer: 2 },
+            { type: 'multiple', category: 4, question: "【情境】稽核伺服器機房：1. 大門用紙箱擋住保持敞開通風。2. 外部冷氣維修員單獨在內工作無人監督。3. 訪客登記簿空白。這違反了哪些原則？", options: ["實體安全邊界保護不足", "訪客與外部人員存取控制失效", "密碼學控制失效", "備份失效"], answer: [0, 1] },
+            { type: 'fill', category: 4, question: "【情境】年度風險報告指出 ERP 存在重大漏洞。風險經理表示：『修補需停機 48 小時，業務反對，故決定直接承擔風險。』但此決定未獲 _ 核准，也未更新至 _ 中，導致文件無法反映真實現況。", words: ["風險擁有者 (Risk Owner)", "適用性聲明書 (SoA)"], answer: ["風險擁有者 (Risk Owner)", "適用性聲明書 (SoA)"] },
+            { type: 'match', category: 4, question: "【情境】發現匹配：", pairs: [{ left: "50台電腦有3台防毒未更新", right: "次要不符合事項 (Minor NC)" }, { left: "完全無定義風險評估準則與產出報告", right: "主要不符合事項 (Major NC)" }, { left: "現有紙本交接易漏簽，建議導入電子簽核", right: "建議事項 (OFI)" }] },
+            { type: 'order', category: 4, question: "【情境】發生資料外洩，請將資安事件應變步驟排序：", items: ["識別與通報 (發現異常)", "分類與評估 (確認為資安事件)", "遏制與根除 (隔離受感染系統)", "復原 (還原資料並上線)", "事後檢討與學習 (根本原因分析)"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 4, question: "【情境】為了方便 3 家外部廠商共 10 位工程師維護，IT 開通了共用 VPN 帳號『vendor_admin』。稽核員的主要疑慮是？", options: ["密碼太短", "共用帳號無法實現『可歸責性 (Accountability)』，無法追溯個人行為", "VPN 頻寬不足", "廠商應自建 VPN"], answer: 1 },
+            { type: 'multiple', category: 4, question: "【情境】政策規定密碼至少 12 碼且 90 天更換。但 AD 伺服器設定為 8 碼且永不過期。IT 表示因老員工抱怨，故私自決定不套用。此情境反映了？", options: ["文件政策與實際技術控制脫鉤", "未經變更管理程序，私自豁免安全控制", "系統當機風險", "缺乏對控制有效性的監督"], answer: [0, 1, 3] },
+            { type: 'fill', category: 4, question: "【情境】遠距辦公員工可將客戶名單下載至無防護的私人電腦。這顯示在 _ 控制上有漏洞。應實施 _ 解決方案防止敏感資料外流。", words: ["遠距工作安全", "資料外洩防護 (DLP)"], answer: ["遠距工作安全", "資料外洩防護 (DLP)"] },
+            { type: 'match', category: 4, question: "【情境】異常觀察匹配：", pairs: [{ left: "機房溫度感測器壞了三個月未修", right: "支援性基礎設施失效" }, { left: "離職兩週後仍有成功登入 ERP 紀錄", right: "存取權限移除失效" }, { left: "員工可隨意解除安裝防毒軟體", right: "端點惡意軟體防護失效" }] },
+            { type: 'order', category: 4, question: "【情境】安全系統開發生命週期 (Secure SDLC) 排序：", items: ["需求分析：納入資安規格", "設計：架構安全與威脅建模", "開發：安全編碼", "測試：弱點掃描與滲透測試", "上線與維運：變更審查後上線"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 4, question: "【情境】客服表示若電腦中勒索病毒，會重開機並上網找破解軟體，以免被罵。這顯示？", options: ["防毒軟體太弱", "缺乏資安認知教育與事件通報程序的宣導", "硬體太舊", "無 MFA"], answer: 1 },
+            { type: 'multiple', category: 4, question: "【情境】IT 指南規定每半年復原演練，但因儲存容量不足，三年未實測還原。這會引發哪些風險？", options: ["違反定期驗證備份可復原性的要求", "災難時可能備份損毀無法還原", "授權過期", "營運持續計畫有效性無法保證"], answer: [0, 1, 3] },
+            { type: 'fill', category: 4, question: "【情境】電商網站使用 HTTP 明文，密碼以 MD5 雜湊。未能保護傳輸的 _ ，且應改用強演算法並保護 _ 的生命週期。", words: ["機密性與完整性", "金鑰 (Keys)"], answer: ["機密性與完整性", "金鑰 (Keys)"] },
+            { type: 'match', category: 4, question: "【情境】營運持續指標匹配：", pairs: [{ left: "RTO", right: "災難後系統必須恢復運作的時間目標" }, { left: "RPO", right: "災難時可容忍的最大資料遺失量 (時間點)" }, { left: "MTPD", right: "服務中斷達到此時間將造成無法挽回的致命衝擊" }] },
+            { type: 'single', category: 4, question: "【情境】稽核員在受稽主管桌上發現寫有系統最高權限密碼的便利貼。主管表示「只有我能進這辦公室」。稽核員應？", options: ["合理", "判定違反桌面淨空與密碼保護原則", "只要字寫小一點就好", "建議貼在螢幕背面"], answer: 1 },
+            { type: 'multiple', category: 4, question: "【情境】組織外包網站開發，合約未提及資安規範與漏洞修補責任。這違反了？", options: ["供應商關係的資安管理", "安全系統開發要求", "實體門禁管制", "人力資源安全"], answer: [0, 1] },
+            { type: 'fill', category: 4, question: "【情境】公司開放員工 BYOD (攜帶自有設備)，卻無任何管控。組織應導入 _ 系統來管控設備，並制定 _ 政策。", words: ["行動裝置管理 (MDM)", "攜帶自有設備 (BYOD)"], answer: ["行動裝置管理 (MDM)", "攜帶自有設備 (BYOD)"] },
+            { type: 'match', category: 4, question: "【情境】設備處置匹配：", pairs: [{ left: "報廢含機密資料的硬碟", right: "需實體破壞或安全消磁" }, { left: "隨身碟 (USB) 控制", right: "限制使用或強制全碟加密" }, { left: "無人看管的印表機報表", right: "實施機密列印 (需刷卡才印)" }] },
+            { type: 'order', category: 4, question: "【情境】變更管理 (Change Management) 審查流程：", items: ["提出變更申請 (RFC)", "評估變更對資安與營運的衝擊", "管理階層審查並核准", "在測試環境驗證", "正式上線並監控"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 4, question: "【情境】稽核員發現內部網路無任何網段隔離 (Network segregation)，訪客 Wi-Fi 可直接連線至財務資料庫。這是？", options: ["嚴重的網路安全設計缺陷", "優良的扁平化設計", "節省成本的好方法", "符合 ISO 規定"], answer: 0 },
+            { type: 'multiple', category: 4, question: "【情境】新進員工到職三個月未接受資安訓練，人資表示太忙。違反哪些要求？", options: ["7.2 能力", "7.3 認知", "A.7 人力資源安全 (訓練)", "8.2 風險評鑑"], answer: [0, 1, 2] },
+            { type: 'fill', category: 4, question: "【情境】日誌 (Logs) 伺服器時間與標準時間相差 15 分鐘。這違反了 _ 原則，將導致資安事件調查時的 _ 分析困難。", words: ["時鐘同步 (Clock synchronization)", "時間軌跡"], answer: ["時鐘同步 (Clock synchronization)", "時間軌跡"] },
+            { type: 'match', category: 4, question: "【情境】雲端與威脅情資 (2022 新控制) 匹配：", pairs: [{ left: "威脅情資 (Threat Intelligence)", right: "主動收集並分析潛在資安威脅以提前防範" }, { left: "雲端服務安全", right: "建立雲端服務的使用、管理與退出政策" }, { left: "組態管理 (Configuration)", right: "確保系統設定符合安全基準 (Baseline)" }] },
+            { type: 'order', category: 4, question: "【情境】實體安全防禦圈 (由外到內)：", items: ["廠區大門警衛與車輛管制", "大廳訪客換證閘機", "辦公區刷卡門禁", "機房生物辨識鎖", "伺服器機櫃實體鑰匙鎖"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 4, question: "【情境】開發部門使用敏捷開發 (Agile)，故拒絕產出任何安全測試紀錄。稽核員應？", options: ["敏捷不需要文件，合規", "不論開發方法，皆須保留測試結果的客觀證據", "要求改用瀑布式", "直接取消開發權限"], answer: 1 },
+            { type: 'multiple', category: 4, question: "【情境】防火牆規則中有一條「允許 ANY to ANY」。管理員說這是為了暫時除錯。這違反了？", options: ["最小權限原則", "網路安全與防火牆管理規範", "未經授權的變更", "桌面淨空"], answer: [0, 1, 2] },
+            { type: 'fill', category: 4, question: "【情境】公司雖有定期弱點掃描，但掃出的高風險漏洞已超過半年未修補。這顯示 _ 流程失效，無法有效降低 _ 。", words: ["技術脆弱性管理 (Vulnerability Mgmt)", "殘餘風險"], answer: ["技術脆弱性管理 (Vulnerability Mgmt)", "殘餘風險"] },
+            { type: 'match', category: 4, question: "【情境】訪談發現匹配：", pairs: [{ left: "員工能正確說出資安政策核心理念", right: "符合 7.3 認知要求 (優良實務)" }, { left: "總經理說資安只是 IT 的事", right: "最高階層缺乏領導力與承諾" }, { left: "業務不知道有資安通報專線", right: "違反事件通報程序宣導" }] },
 
-            // --- 單元 5: 稽核報告與結束 ---
-            { type: 'single', category: 5, question: "【長篇情境題】在結束會議 (Closing Meeting) 前，主導稽核員正在準備不符合事項報告 (NCR)。其中一項缺失為：『抽查 10 份新進人員的報到表，發現有 8 份並未簽署保密協議 (NDA)。』稽核員將此列為次要不符合事項。\n\n在結束會議上，人資主管對此項缺失表示強烈抗議，並大聲說：『我們公司規模這麼小，大家都是親戚朋友介紹進來的，根本不可能洩密！簽那個協議只是形式，你們不應該開這張缺失！』面對受稽部門主管的強烈反彈與拒絕接受，身為主導稽核員，您最合適的應對方式是什麼？", options: ["與人資主管大聲爭辯，並威脅如果不接受就直接判定稽核不通過", "立刻妥協，將該缺失從報告中刪除以維持雙方良好關係", "保持冷靜，說明 NDA 是控制要求與既定準則，若仍拒絕接受，則將此爭議記錄於報告中提交驗證機構", "請人資主管私下請稽核團隊吃飯，然後把缺失改為建議事項"], answer: 2 },
-            { type: 'multiple', category: 5, question: "【長篇情境題 - 多選】針對上個月外部稽核開立的『主要不符合事項 (Major NC)』：『組織未能在每年實施至少一次的營運持續演練(復原測試)』。受稽組織的 IT 部門提交了以下的『根本原因分析與矯正措施計畫 (CAP)』給主導稽核員審查。\n\n根本原因：『因為 IT 部門去年有三位資深工程師離職，人力嚴重不足，大家都在忙著處理日常維運，根本沒有時間去規劃和執行復原測試。』\n矯正措施：『IT 經理已經口頭警告剩下的工程師，要求他們明年一定要擠出時間來做測試。』\n\n身為負責審查該計畫的稽核員，您認為這份計畫存在哪些嚴重的問題，導致您必須『退回』該計畫要求重寫？", options: ["根本原因分析過於表象，未探討最高階層為何未介入資源分配與工作優先級", "矯正措施僅是『口頭警告』，並未實質解決資源不足的問題，也缺乏具體的執行時間表", "報告中沒有提供參與測試人員的餐費預算明細", "未建立可驗證的機制來確保未來的演練能夠如期執行"], answer: [0, 1, 3] },
-            { type: 'fill', category: 5, question: "【長篇情境題 - 拖放填空】主導稽核員正在撰寫最終的第三方驗證稽核報告 (Audit Report)。在撰寫『行政摘要 (Executive Summary)』時，報告必須清楚說明本次稽核的範圍、時間、以及稽核結論。\n\n對於稽核過程中發現的嚴重缺失，稽核員寫道：『在本次稽核中，共發現了 2 項 _ ，這表示組織的 ISMS 存在系統性失效的風險；因此，稽核團隊目前的建議是 _ 發放 ISO 27001 證書，直到組織提出有效的根本原因分析與矯正措施，並經稽核員驗證有效後，方可重新評估。』", words: ["主要不符合事項 (Major NC)", "次要不符合事項 (Minor NC)", "推薦 (Recommend)", "不推薦 (Not recommend)"], answer: ["主要不符合事項 (Major NC)", "不推薦 (Not recommend)"] },
-            { type: 'match', category: 5, question: "【長篇情境題 - 匹配】在第三方驗證的結束會議 (Closing Meeting) 中，主導稽核員需要向最高管理階層與各部門主管報告稽核結果。為確保會議順利進行並符合 ISO 19011 規範，請將主導稽核員的『發言情境』與其對應的『會議目的』進行匹配：", pairs: [{ left: "『本次稽核我們抽查了研發部 5 個專案中的 2 個，這意味著未被抽查到的專案可能仍存在未發現的風險。』", right: "重申稽核抽樣的限制與不確定性" }, { left: "『關於 A.8.1 的這張缺失單，由於貴公司昨天已經補齊了相關的文件簽核，我們決定將其降級。』", right: "澄清與解決受稽者對稽核發現的任何分歧與疑問" }, { left: "『針對這 3 張次要缺失單，請貴公司在 30 天內提交根本原因分析與矯正措施計畫。』", right: "說明後續行動的要求與時間表" }] },
-            { type: 'order', category: 5, question: "【長篇情境題 - 拖放排序】當外部驗證稽核結束，且主導稽核員在結束會議上宣布了多項不符合事項 (NC) 後，受稽組織與驗證機構之間將展開一系列的後續追蹤與發證流程。\n\n請將以下標準的『稽核後續行動與結案 (Post-Audit & Closing)』流程依序排列：", items: ["受稽組織針對缺失進行根本原因分析 (Root Cause Analysis)", "受稽組織制定並提交矯正措施計畫 (Corrective Action Plan)", "主導稽核員審查並接受矯正措施計畫的適切性", "受稽組織執行矯正措施，並提供實作證據 (或由稽核員安排跟催稽核)", "驗證機構完成技術審查，確認無未解決的 Major NC，正式核發證書"], answer: [0, 1, 2, 3, 4] },
-            { type: 'single', category: 5, question: "【長篇情境題】在撰寫稽核報告時，主導稽核員回顧了一項觀察：『組織的內部稽核員在執行年度內部稽核時，審查了自己所屬的 IT 維運部門，並判定所有項目皆完全符合。』主導稽核員決定為此開立不符合事項。\n\n請問，開立此不符合事項的最主要標準依據 (Audit Criteria) 是什麼？", options: ["內部稽核員沒有考取 ISO 27001 主導稽核員證書", "內部稽核過程違反了『客觀性』與『稽核員的獨立性』原則 (不應稽核自己的工作)", "內部稽核報告的字數太少", "內部稽核沒有聘請外部顧問參與"], answer: 1 },
-            { type: 'multiple', category: 5, question: "【長篇情境題 - 多選】針對『主要不符合事項 (Major Nonconformity)』的定義，驗證機構通常在何種情況下會開立 Major NC，並可能導致延遲發證或暫停證書？", options: ["標準要求的某個關鍵條文 (例如管理階層審查、風險評鑑) 發生系統性失效或完全未實施", "發現單一員工將密碼寫在筆記本上 (局部個案)", "現有的控制措施實施情況存在嚴重缺失，對資訊安全造成直接且重大的威脅", "連續多次發生相同的次要不符合事項 (Minor NC) 且未被有效糾正"], answer: [0, 2, 3] },
-            { type: 'order', category: 5, question: "【長篇情境題 - 拖放排序】當受稽組織收到驗證機構開立的不符合事項報告 (NCR) 後，必須執行完整的『矯正措施 (Corrective Action)』流程。為了徹底解決問題，請將下列矯正措施處理步驟依最符合邏輯與標準要求的順序排列：", items: ["採取立即的『導正/應變措施 (Correction)』來控制眼前的損害", "執行『根本原因分析 (Root Cause Analysis)』，找出問題為何會發生的核心原因", "制定『矯正措施計畫 (CAP)』以消除根本原因，防止問題再次發生", "執行矯正措施，並保留相關的文件化證據", "審查所採取矯正措施的『有效性 (Effectiveness)』"], answer: [0, 1, 2, 3, 4] }
+            // ================= 單元 5: 稽核報告與結束 (16題) =================
+            { type: 'single', category: 5, question: "【情境】抽查 10 份報到表有 8 份未簽 NDA。人資主管抗議公司小不會洩密，拒絕接受次要缺失。主導稽核員應？", options: ["大聲爭辯", "妥協刪除缺失", "保持冷靜說明 NDA 是準則，若仍拒絕則記錄爭議提交驗證機構", "改為建議事項"], answer: 2 },
+            { type: 'multiple', category: 5, question: "【情境】針對未演練的 Major NC，IT 提交根本原因：「人員離職太忙」。矯正措施：「口頭警告工程師明年擠出時間」。為何需退回重寫？", options: ["根本原因未探討管理層資源分配問題", "僅口頭警告無法解決資源不足", "無具體時間表與可驗證的預防機制", "未附上餐費明細"], answer: [0, 1, 2] },
+            { type: 'fill', category: 5, question: "【情境】行政摘要寫道：『本次共發現 2 項 _ ，表示系統有失效風險；故稽核團隊建議 _ 發放證書，直到組織提出矯正並驗證有效。』", words: ["主要不符合事項 (Major NC)", "不推薦 (Not recommend)"], answer: ["主要不符合事項 (Major NC)", "不推薦 (Not recommend)"] },
+            { type: 'match', category: 5, question: "【情境】結束會議發言匹配：", pairs: [{ left: "抽查有其限制，未抽到不代表無風險", right: "重申抽樣的不確定性" }, { left: "昨天已補齊簽核，我們決定將缺失降級", right: "解決受稽者對發現的分歧" }, { left: "請於 30 天內提交根本原因與矯正計畫", right: "說明後續行動時間表" }] },
+            { type: 'order', category: 5, question: "【情境】稽核後續跟催 (Follow-up) 流程：", items: ["組織針對缺失進行根本原因分析", "提交矯正措施計畫 (CAP)", "稽核員審查計畫適切性", "組織實施措施並提供證據", "驗證機構審查確認後核發證書"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 5, question: "【情境】內部稽核員審查自己所屬的 IT 部門並判全數符合。開立不符合事項的主要依據是？", options: ["稽核員無證照", "違反內部稽核『客觀性』與『獨立性』原則", "報告字數太少", "未請顧問"], answer: 1 },
+            { type: 'multiple', category: 5, question: "【情境】驗證機構在何種情況下會開立 Major NC？", options: ["關鍵條文系統性失效或完全未實施", "控制實施存在嚴重缺失，對資安造成直接重大威脅", "單一員工密碼貼紙 (偶發)", "連續多次發生相同 Minor NC 且未糾正"], answer: [0, 1, 3] },
+            { type: 'order', category: 5, question: "【情境】矯正措施處理邏輯順序：", items: ["採取導正/應變措施 (Correction)", "執行根本原因分析 (RCA)", "制定矯正措施計畫 (CAP) 消除根本原因", "執行矯正措施並留存證據", "審查矯正措施的有效性"], answer: [0, 1, 2, 3, 4] },
+            { type: 'single', category: 5, question: "【情境】稽核員發現去年外部稽核開的 Minor NC 至今未處理，狀態仍為「未關閉」。這通常會導致？", options: ["稽核員幫忙寫", "該 Minor NC 升級為 Major NC", "直接忽略", "延長三年"], answer: 1 },
+            { type: 'fill', category: 5, question: "【情境】撰寫缺失單時，良好的描述應包含具體的 _ 、人事時地物的規模，以及明確違反的 _ 。", words: ["客觀證據", "稽核準則 (Criteria)"], answer: ["客觀證據", "稽核準則 (Criteria)"] },
+            { type: 'match', category: 5, question: "【情境】稽核報告寫法品質匹配：", pairs: [{ left: "某員工桌面很亂", right: "寫法不良：缺乏具體證據與準則" }, { left: "業務部抽查5桌有2桌留有合約正本，違反A.7.7", right: "寫法優良：包含證據、規模與明確準則" }, { left: "IT部門都不管資安", right: "寫法不良：帶有主觀情緒與偏見" }] },
+            { type: 'single', category: 5, question: "【情境】受稽組織完全沒有實施內部稽核 (Clause 9.2)，直接申請外部認證。這應被判定為？", options: ["Major NC，因缺失了強制要求的核心流程", "Minor NC", "OFI", "符合規定"], answer: 0 },
+            { type: 'multiple', category: 5, question: "【情境】良好的根本原因分析 (RCA) 應該具備什麼特徵？", options: ["找出替罪羔羊", "探討流程、資源或管理機制的系統性問題", "使用如「5 Why」等分析工具", "僅停留在表面現象 (如：員工忘記了)"], answer: [1, 2] },
+            { type: 'fill', category: 5, question: "【情境】_ 是指消除已發現不符合事項的原因；而 _ 則是為控制眼前狀況所採取的即時補救。兩者不可混淆。", words: ["矯正措施 (Corrective Action)", "導正措施 (Correction)"], answer: ["矯正措施 (Corrective Action)", "導正措施 (Correction)"] },
+            { type: 'match', category: 5, question: "【情境】後續追蹤行動匹配：", pairs: [{ left: "文件審查關閉 (Desk review)", right: "受稽者提供書面證據即可驗證有效性 (如修改政策)" }, { left: "現場跟催稽核 (On-site Follow-up)", right: "需親自到現場確認設備或流程是否真實改善" }, { left: "下次定期稽核時驗證", right: "針對低風險的 Minor NC 或 OFI 的常見做法" }] },
+            { type: 'single', category: 5, question: "誰對「最終第三方稽核報告」擁有擁有權 (Ownership)？", options: ["主導稽核員", "驗證機構", "稽核客戶 (Audit Client)", "全體員工"], answer: 2 }
         ];
-
-        // 自動擴充題庫至每個單元 50 題 (共 250 題)
-        // 備註：此腳本為動態補足缺少的佔位題目。若您未來有了真實的 50 題，可以直接覆蓋上方的 questionBank 陣列，並將這段迴圈刪除。
-        for (let c = 1; c <= 5; c++) {
-            let currentCount = questionBank.filter(q => q.category === c).length;
-            for (let i = currentCount + 1; i <= 50; i++) {
-                questionBank.push({
-                    type: 'single', category: c,
-                    question: `【擴充測試題】這是單元 ${c} 的隨機抽測題目。\n(請注意，這是系統為滿足「每單元50題」自動生成的佔位題目，您可以自行在程式碼中替換為真實考題。)`,
-                    options: ["選項 A", "選項 B (正確解答)", "選項 C", "選項 D"], answer: 1
-                });
-            }
-        }
 
         let examQuestions = [];
         let currentQuestionIndex = 0;
