@@ -58,7 +58,7 @@
                 <li><strong>時間限制：</strong> 1 小時 45 分鐘（全局倒數，各單元建議時間僅供參考）。</li>
                 <li><strong>測驗題數：</strong> 共 40 題（單元一~三各 6 題，單元四 14 題，單元五 8 題）。</li>
                 <li><strong>單向進行：</strong> 進入下一題後，<strong>無法回到上一題</strong>。</li>
-                <li><strong>自動計分：</strong> 測驗結束後將自動結算成績，滿分 80 分，及格門檻為 70%（56分）。<br>（配分：單元一~三 每題 1 分，單元四 每題 3 分，單元五 每題 2.5 分）</li>
+                <li><strong>自動計分：</strong> 測驗結束後將自動結算成績，滿分 80 分，及格門檻為 50%（40分）。<br>（配分：單元一~三 每題 1 分，單元四 每題 3 分，單元五 每題 2.5 分）</li>
             </ul>
             <button id="start-btn">開始測驗</button>
         </div>
@@ -431,10 +431,12 @@
 
         function handleBreak() {
             // 彈出對話框詢問是否確定要休息
-            if (confirm('確定要休息嗎？點擊「確定」將暫停測驗時間，並開始 10 分鐘的休息。您可以隨時點擊按鈕提早結束休息。')) {
+            if (confirm('確定要休息嗎？測驗期間只能休息一次。點擊「確定」將暫停測驗時間，並開始 10 分鐘的休息。您可以隨時點擊按鈕提早結束休息。')) {
                 clearInterval(timerInterval); // 暫停主時間倒數
                 breakOverlay.classList.add('active'); // 顯示休息遮罩，防止繼續作答
                 
+                breakBtn.style.display = 'none'; // 隱藏休息按鈕，確保只能休息一次
+
                 let breakTimeLeft = 600; // 10分鐘 = 600秒
                 breakTimerDisplay.innerText = `剩餘休息時間: 10:00`;
                 
@@ -473,14 +475,14 @@
                 else if (q.category === 5) maxScore += 2.5;
             });
             
-            const passMark = maxScore * 0.7;
+            const passMark = maxScore * 0.5;
             const finalScorePercentage = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
             const isPass = score >= passMark;
 
             let message = timeOut ? '<p class="fail">時間到！測驗已強制結束。</p>' : '';
             message += `<p>你的總得分為：<strong>${score}</strong> 分 / 滿分 ${maxScore} 分</p>`;
             message += `<p>正確率：${finalScorePercentage}%</p>`;
-            message += isPass ? `<p class="pass">🎉 恭喜您！您達到了 70% 的及格門檻（${passMark.toFixed(1)}分），通過了 ISO 27001 模擬測驗。</p>` : `<p class="fail">❌ 很遺憾，您未達 70% 的及格標準（${passMark.toFixed(1)}分），請再接再厲。</p>`;
+            message += isPass ? `<p class="pass">🎉 恭喜您！您達到了 50% 的及格門檻（${passMark.toFixed(1)}分），通過了 ISO 27001 模擬測驗。</p>` : `<p class="fail">❌ 很遺憾，您未達 50% 的及格標準（${passMark.toFixed(1)}分），請再接再厲。</p>`;
 
             document.getElementById('result-message').innerHTML = message;
             
